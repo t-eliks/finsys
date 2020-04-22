@@ -1,0 +1,34 @@
+﻿@model Web.ViewModels.ExpenseListViewModel
+@{
+    ViewData["Title"] = "ExpenseList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Išlaidos</h1>
+
+<div class="align-right margin-min">
+    <a class="btn btn-primary" asp-action="CreateForm" asp-controller="Expense"><span class="fas fa-plus"/> <span>Kurti</span></a>
+</div>
+<table class="table borderless">
+    <tr>
+        <th>#</th>
+        <th>Paskirtis</th>
+        <th>Kiekis</th>
+        <th>Pastaba</th>
+        <th>Data</th>
+        <th></th>
+    </tr>
+
+    @foreach (var expense in Model.Expenses)
+    {
+        <tr>
+            <td>1</td>
+            <td>@(expense.Purpose)</td>
+            <td>@expense.Amount</td>
+            <td>@(expense.Note ?? "-")</td>
+            <td>@expense.CreatedOn.ToString("yyyy-MM-dd")</td>
+            <td><a class="btn btn-outline-secondary" asp-controller="Expense" asp-action="editSelectedExpense" asp-route-id="@expense.Id">Redaguoti</a> 
+            <a class="btn btn-danger" asp-controller="Expense" asp-action="DeleteSelected" asp-route-id="@expense.Id"><span class="fas fa-trash"/></a></td>
+        </tr>
+    }
+
+</table>

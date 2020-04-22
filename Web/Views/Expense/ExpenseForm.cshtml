@@ -1,0 +1,29 @@
+﻿@model Web.ViewModels.ExpenseViewModel
+@{
+    ViewData["Title"] = "ExpenseForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var isAdd = Model.Id == 0;
+}
+
+<h1>@(isAdd ? "Pridėti išlaidą" : "Redaguoti išlaidą")</h1>
+
+@Html.Partial("_ErrorMessage")
+
+@using (Html.BeginForm(isAdd ? "Create" : "ValidateAndEditExpense", "Expense", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+    <div class="form-group">
+        <label for="Purpose">Paskirtis*</label>
+        @Html.TextBoxFor(x => x.Purpose, new { @placeholder = "Paskirtis", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label for="Purpose">Kiekis*</label>
+        @Html.TextBoxFor(x => x.Amount, new { @placeholder = "Kiekis", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label for="Purpose">Pastaba</label>
+        @Html.TextBoxFor(x => x.Note, new { @placeholder = "Pastaba", @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">@(isAdd ? "Pridėti" : "Redaguoti")</button>
+}
