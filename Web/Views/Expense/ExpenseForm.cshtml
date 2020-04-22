@@ -10,7 +10,7 @@
 
 @Html.Partial("_ErrorMessage")
 
-@using (Html.BeginForm(isAdd ? "Create" : "ValidateAndEditExpense", "Expense", FormMethod.Post))
+@using (Html.BeginForm(isAdd ? "Create" : "EditExpense", "Expense", FormMethod.Post))
 {
     @Html.HiddenFor(x => x.Id)
     <div class="form-group">

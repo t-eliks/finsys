@@ -26,7 +26,7 @@
             <td>@expense.Amount</td>
             <td>@(expense.Note ?? "-")</td>
             <td>@expense.CreatedOn.ToString("yyyy-MM-dd")</td>
-            <td><a class="btn btn-outline-secondary" asp-controller="Expense" asp-action="editSelectedExpense" asp-route-id="@expense.Id">Redaguoti</a> 
+            <td><a class="btn btn-outline-secondary" asp-controller="Expense" asp-action="EditSelected" asp-route-id="@expense.Id">Redaguoti</a> 
             <a class="btn btn-danger" asp-controller="Expense" asp-action="DeleteSelected" asp-route-id="@expense.Id"><span class="fas fa-trash"/></a></td>
         </tr>
     }

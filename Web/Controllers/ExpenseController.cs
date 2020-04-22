@@ -24,7 +24,7 @@ namespace Web.Controllers
 
         [Route("edit/{id:int}")]
         [HttpGet]
-        public IActionResult EditSelectedExpense(int id)
+        public IActionResult EditSelected(int id)
         {
             var expense = repository.Expenses.FirstOrDefault(x => x.Id == id);
 
@@ -43,7 +43,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult ValidateAndEditExpense(ExpenseViewModel viewModel)
+        public IActionResult EditExpense(ExpenseViewModel viewModel)
         {
             var validation = ValidateData(viewModel);
 
@@ -65,7 +65,9 @@ namespace Web.Controllers
 
             UpdateExpense(expense, viewModel);
 
-            return RedirectToAction("openExpenseList", "Expense");
+            var expenses = SelectUsersExpenses();
+
+            return View("ExpenseList", new ExpenseListViewModel { Expenses = expenses });
         }
 
         [HttpGet]
@@ -88,7 +90,9 @@ namespace Web.Controllers
 
             InsertNewExpense(viewModel);
 
-            return View("ExpenseList");
+            var expenses = SelectUsersExpenses();
+
+            return View("ExpenseList", new ExpenseListViewModel { Expenses = expenses });
         }
 
         //[HttpDelete]
