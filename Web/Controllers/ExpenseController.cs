@@ -54,7 +54,7 @@ namespace Web.Controllers
                 return View("ExpenseForm", viewModel);
             }
 
-            var expense = repository.Expenses.FirstOrDefault(x => x.Id == viewModel.Id);
+            var expense = FetchExpense(viewModel.Id);
 
             if (expense == null)
             {
@@ -156,6 +156,11 @@ namespace Web.Controllers
         private IList<Expense> SelectUsersExpenses()
         {
             return repository.Expenses.ToList();
+        }
+
+        private Expense FetchExpense(int id)
+        {
+            return repository.Expenses.FirstOrDefault(x => x.Id == id);
         }
     }
 }
