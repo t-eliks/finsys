@@ -1,12 +1,14 @@
 ﻿@model Web.ViewModels.ExpenseViewModel
 @{
-    ViewData["Title"] = "ExpenseForm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     var isAdd = Model.Id == 0;
+    var title = isAdd ? "Pridėti išlaidą" : "Redaguoti išlaidą";
+    
+    ViewData["Title"] = title;
 }
 
-<h1>@(isAdd ? "Pridėti išlaidą" : "Redaguoti išlaidą")</h1>
+<h1>@(title)</h1>
 
 @Html.Partial("_ErrorMessage")
 
