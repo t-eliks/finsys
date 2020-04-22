@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public double Amount { get; set; }
+        public double? Amount { get; set; }
 
         public string Purpose { get; set; }
 

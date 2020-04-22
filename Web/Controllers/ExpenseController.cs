@@ -17,6 +17,8 @@ namespace Web.Controllers
             this.repository = repository;
         }
 
+        [HttpGet]
+        [Route("expenses")]
         public IActionResult OpenExpenseList()
         {
             return View("ExpenseList", new ExpenseListViewModel { Expenses = SelectUsersExpenses() });
@@ -33,7 +35,7 @@ namespace Web.Controllers
                 return View("ExpenseList");
             }
 
-            return View("ExpenseForm", new ExpenseViewModel 
+            return View("ExpenseForm", new ExpenseViewModel
             {
                 Id = expense.Id,
                 Amount = expense.Amount,
@@ -95,18 +97,29 @@ namespace Web.Controllers
             return View("ExpenseList", new ExpenseListViewModel { Expenses = expenses });
         }
 
-        //[HttpDelete]
-        //[Route("delete/{id:int}")]
-        //public IActionResult DeleteSelected(int id)
-        //{
-        //    
-        //}
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            return PartialView("DeleteConfirmForm", new DeleteExpenseViewModel { Id = id });
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteExpense(int id)
+        {
+            var expense = repository.Expenses.FirstOrDefault(x => x.Id == id);
+
+            repository.Remove(expense);
+
+            repository.SaveChanges();
+
+            return Ok(Url.Action("OpenExpenseList", "Expense"));
+        }
 
         private void InsertNewExpense(ExpenseViewModel viewModel)
         {
             var expense = new Expense
             {
-                Amount = viewModel.Amount,
+                Amount = viewModel.Amount.Value,
                 Note = viewModel.Note,
                 Purpose = viewModel.Purpose,
                 CreatedOn = DateTime.UtcNow
@@ -117,17 +130,13 @@ namespace Web.Controllers
             repository.SaveChanges();
         }
 
-        private void Delete(int id)
-        {
-            var expense = repository.Expenses.FirstOrDefault(x => x.Id == id);
-
-            repository.Remove(expense);
-
-            repository.SaveChanges();
-        }
-
         private string ValidateData(ExpenseViewModel viewModel)
         {
+            if (!viewModel.Amount.HasValue)
+            {
+                return "Kiekis yra privalomas";
+            }
+
             if (viewModel.Amount < 0)
             {
                 return "Kiekis turi būti daugiau už 0.";
@@ -143,7 +152,7 @@ namespace Web.Controllers
 
         private void UpdateExpense(Expense expense, ExpenseViewModel viewModel)
         {
-            expense.Amount = viewModel.Amount;
+            expense.Amount = viewModel.Amount.Value;
             expense.Note = viewModel.Note;
             expense.Purpose = viewModel.Purpose;
             expense.UpdatedOn = DateTime.UtcNow;
