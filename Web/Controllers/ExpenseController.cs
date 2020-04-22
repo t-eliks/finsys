@@ -45,7 +45,7 @@ namespace Web.Controllers
         [HttpPost]
         public IActionResult ValidateAndEditExpense(ExpenseViewModel viewModel)
         {
-            var validation = ValidateExpenseData(viewModel);
+            var validation = ValidateData(viewModel);
 
             if (!string.IsNullOrWhiteSpace(validation))
             {
@@ -77,7 +77,7 @@ namespace Web.Controllers
         [HttpPost]
         public IActionResult Create(ExpenseViewModel viewModel)
         {
-            var validation = ValidateExpenseData(viewModel);
+            var validation = ValidateData(viewModel);
 
             if (!string.IsNullOrWhiteSpace(validation))
             {
@@ -122,7 +122,7 @@ namespace Web.Controllers
             repository.SaveChanges();
         }
 
-        private string ValidateExpenseData(ExpenseViewModel viewModel)
+        private string ValidateData(ExpenseViewModel viewModel)
         {
             if (viewModel.Amount < 0)
             {
