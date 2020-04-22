@@ -98,7 +98,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public IActionResult DeleteSelected(int id)
         {
             return PartialView("DeleteConfirmForm", new DeleteExpenseViewModel { Id = id });
         }
