@@ -28,4 +28,5 @@
         @Html.TextBoxFor(x => x.Note, new { @placeholder = "Pastaba", @class = "form-control" })
     </div>
     <button type="submit" class="btn btn-primary">@(isAdd ? "Pridėti" : "Redaguoti")</button>
+    <a class="btn btn-outline-secondary" asp-controller="Expense" asp-action="OpenExpenseList">Grįžti į sąrašą</a>
 }

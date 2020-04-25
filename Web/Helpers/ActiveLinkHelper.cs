@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Web.Helpers
 {
     public static class ActiveLinkHelper
     {
-        public static string IsActiveLink(string actionName, ViewContext viewContext)
+        public static string IsActiveLink(string actionName, ViewDataDictionary viewData)
         {
-            return viewContext.RouteData.Values["Action"].ToString() == actionName ? "link-active" : string.Empty;
+            return viewData["Menu"]?.ToString() == actionName ? "link-active" : string.Empty;
         }
     }
 }

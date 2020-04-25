@@ -11,12 +11,12 @@
 <body>
     <div class="body-container container">
         <div class="sidebar">
-            <a class="@ActiveLinkHelper.IsActiveLink("Index", ViewContext)" asp-controller="User" asp-action="Index">Namai</a>
+            <a class="@ActiveLinkHelper.IsActiveLink("Home", ViewData)" asp-controller="User" asp-action="Index">Namai</a>
             <a href="#">Profilis</a>
             <a href="#">Pranešimai</a>
             <a href="#">Paskolos</a>
             <a href="#">Pajamos</a>
-            <a class="@ActiveLinkHelper.IsActiveLink("OpenExpenseList", ViewContext)" asp-controller="Expense" asp-action="OpenExpenseList">Išlaidos</a>
+            <a class="@ActiveLinkHelper.IsActiveLink("ExpenseList", ViewData)" asp-controller="Expense" asp-action="OpenExpenseList">Išlaidos</a>
             <a href="#">Kategorijų valdymas</a>
             <a href="#">Pensijų Fondas</a>
             <a href="#">Akcijos</a>
@@ -24,6 +24,7 @@
             <a href="#">Finansiniai Straipsniai</a>
         </div>
         <main class="main-content" role="main" class="pb-3">
+            @Html.Partial("_BreadCrumb", (BreadCrumb)ViewData["BreadCrumbs"])
             @RenderBody()
         </main>
     </div>

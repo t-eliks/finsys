@@ -1,0 +1,16 @@
+﻿@model Web.Helpers.BreadCrumb
+
+    <div class="breadcrumb">
+        @foreach (var crumb in Model.Crumbs)
+        {
+            if (Model.Crumbs.Last() == crumb)
+            {
+                <span>@crumb.Name</span>
+            }
+            else
+            {
+                <a href="@crumb.Link">@crumb.Name</a>
+                <span>&nbsp;/&nbsp;</span>
+            }
+        }
+    </div>

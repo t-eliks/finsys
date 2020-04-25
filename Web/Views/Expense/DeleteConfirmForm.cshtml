@@ -1,17 +1,17 @@
 ﻿@model Web.ViewModels.DeleteExpenseViewModel
 
-<div class="modal-dialog-centered">
-    <div class="modal-body">
-        <h3>Ar tikrai norite pašalinti išlaidą?</h3>
-        <div class="align-right">
-            <button class="btn btn-outline-secondary" style="margin-right: 20px">Atšaukti</button>
-            <button id="delete-button" class="btn btn-danger">Šalinti</button>
-        </div>
+<div class="modal-body">
+    <h3>Ar tikrai norite pašalinti išlaidą?</h3>
+    <div class="align-right">
+        <button class="btn btn-outline-secondary" style="margin-right: 20px">Atšaukti</button>
+        <button id="delete-button" class="btn btn-danger">Šalinti</button>
     </div>
 </div>
 
 <script>
     $(document).ready(function () {
+        $(".modal").css("height", "200px");
+
         $("#delete-button").bind("click", function () {
             $.ajax('@Url.Action("DeleteExpense", "Expense", new { id = Model.Id })', {
                 type: 'DELETE'

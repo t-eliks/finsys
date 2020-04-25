@@ -100,3 +100,9 @@ span {
 .main-content {
   flex: 4;
 }
+
+.breadcrumb {
+    background: gray;
+    display: flex;
+    flex-flow: row;
+}
