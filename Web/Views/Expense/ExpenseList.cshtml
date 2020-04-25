@@ -10,8 +10,10 @@
 }
 <h1>Išlaidos</h1>
 
+@Html.Partial("_SuccessMessage")
+
 <div class="align-right margin-min">
-    <a class="btn btn-primary" asp-action="CreateForm" asp-controller="Expense"><span class="fas fa-plus"/> <span>Kurti</span></a>
+    <a class="btn btn-primary" asp-action="CreateForm" asp-controller="Expense"><span class="fas fa-plus" /> <span>Kurti</span></a>
 </div>
 <table class="table borderless">
     <tr>
@@ -31,8 +33,10 @@
             <td>@expense.Amount</td>
             <td>@(expense.Note ?? "-")</td>
             <td>@expense.CreatedOn.ToString("yyyy-MM-dd")</td>
-            <td><a class="btn btn-outline-secondary" asp-controller="Expense" asp-action="EditSelected" asp-route-id="@expense.Id">Redaguoti</a> 
-            <a class="btn btn-danger" href="@Url.Action("DeleteSelected", "Expense", new { id = expense.Id })" rel="modal:open"><span class="fas fa-trash"/></a></td>
+            <td>
+                <a class="btn btn-outline-secondary" asp-controller="Expense" asp-action="EditSelected" asp-route-id="@expense.Id">Redaguoti</a>
+                <a class="btn btn-danger" href="@Url.Action("Delete", "Expense", new { id = expense.Id })" rel="modal:open"><span class="fas fa-trash" /></a>
+            </td>
         </tr>
     }
 

@@ -65,6 +65,8 @@ namespace Web.Controllers
                 return View("ExpenseForm", viewModel);
             }
 
+            TempData["Success"] = "Sėkmingai atnaujinta išlaida!";
+
             UpdateExpense(expense, viewModel);
 
             var expenses = SelectUsersExpenses();
@@ -98,7 +100,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult DeleteSelected(int id)
+        public IActionResult Delete(int id)
         {
             return PartialView("DeleteConfirmForm", new DeleteExpenseViewModel { Id = id });
         }
