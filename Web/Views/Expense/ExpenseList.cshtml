@@ -3,7 +3,9 @@
 @{
     ViewData["Title"] = "Išlaidų sąrašas";
     ViewData["Menu"] = "ExpenseList";
-    ViewData["BreadCrumbs"] = new BreadCrumb().Append(SiteCrumbs.Home(Url)).Append(SiteCrumbs.ExpenseList(Url));
+    ViewData["BreadCrumbs"] = new BreadCrumb()
+        .Append(SiteCrumbs.Home(Url))
+        .Append(SiteCrumbs.ExpenseList(Url));
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h1>Išlaidos</h1>

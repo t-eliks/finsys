@@ -2,7 +2,8 @@
 @{
     ViewData["Title"] = "Namai";
     ViewData["Menu"] = "Home";
-    ViewData["BreadCrumbs"] = new BreadCrumb().Append(SiteCrumbs.Home(Url));
+    ViewData["BreadCrumbs"] = new BreadCrumb()
+        .Append(SiteCrumbs.Home(Url));
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
