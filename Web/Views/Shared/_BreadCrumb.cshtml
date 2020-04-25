@@ -1,5 +1,7 @@
 ﻿@model Web.Helpers.BreadCrumb
 
+@if (Model != null)
+{
     <div class="breadcrumb">
         @foreach (var crumb in Model.Crumbs)
         {
@@ -14,3 +16,4 @@
             }
         }
     </div>
+}

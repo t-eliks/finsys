@@ -24,7 +24,7 @@
     @foreach (var expense in Model.Expenses)
     {
         <tr>
-            <td>1</td>
+            <td>@(Model.Expenses.IndexOf(expense) + 1)</td>
             <td>@(expense.Purpose)</td>
             <td>@expense.Amount</td>
             <td>@(expense.Note ?? "-")</td>
