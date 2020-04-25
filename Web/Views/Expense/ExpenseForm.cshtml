@@ -10,8 +10,6 @@
 
 <h1>@(title)</h1>
 
-@Html.Partial("_ErrorMessage")
-
 @using (Html.BeginForm(isAdd ? "Create" : "EditExpense", "Expense", FormMethod.Post))
 {
     @Html.HiddenFor(x => x.Id)

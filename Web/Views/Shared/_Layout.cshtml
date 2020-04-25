@@ -25,6 +25,8 @@
         </div>
         <main class="main-content" role="main" class="pb-3">
             @Html.Partial("_BreadCrumb", (BreadCrumb)ViewData["BreadCrumbs"])
+            @Html.Partial("_ErrorMessage")
+            @Html.Partial("_SuccessMessage")
             @RenderBody()
         </main>
     </div>

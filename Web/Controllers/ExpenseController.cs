@@ -94,6 +94,8 @@ namespace Web.Controllers
 
             InsertNewExpense(viewModel);
 
+            TempData["Success"] = "Išlaida sėkmingai pridėta!";
+
             var expenses = SelectUsersExpenses();
 
             return View("ExpenseList", new ExpenseListViewModel { Expenses = expenses });
@@ -113,6 +115,8 @@ namespace Web.Controllers
             repository.Remove(expense);
 
             repository.SaveChanges();
+
+            TempData["Success"] = "Išlaida sėkmingai panaikinta!";
 
             return Ok(Url.Action("OpenExpenseList", "Expense"));
         }
