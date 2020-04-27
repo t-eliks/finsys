@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Web.Controllers
+namespace Web.Controllers.User
 {
     public class UserController : Controller
     {
