@@ -4,7 +4,7 @@
 
     var isAdd = Model.Id == 0;
     var title = isAdd ? "Pridėti išlaidą" : "Redaguoti išlaidą";
-    
+
     ViewData["Title"] = title;
 }
 
@@ -15,7 +15,7 @@
     @Html.HiddenFor(x => x.Id)
     <div class="form-group">
         <label for="Purpose">Paskirtis*</label>
-        @Html.TextBoxFor(x => x.Purpose, new { @placeholder = "Paskirtis", @class = "form-control" })
+        @Html.TextBoxFor(x => x.Origin, new { @placeholder = "Paskirtis", @class = "form-control" })
     </div>
     <div class="form-group">
         <label for="Purpose">Kiekis (€)*</label>
@@ -23,7 +23,7 @@
     </div>
     <div class="form-group">
         <label for="Purpose">Pastaba</label>
-        @Html.TextBoxFor(x => x.Note, new { @placeholder = "Pastaba", @class = "form-control" })
+        @Html.TextBoxFor(x => x.Comment, new { @placeholder = "Pastaba", @class = "form-control" })
     </div>
     <button type="submit" class="btn btn-primary">@(isAdd ? "Pridėti" : "Redaguoti")</button>
     <a class="btn btn-outline-secondary" asp-controller="Expense" asp-action="OpenExpenseList">Grįžti į sąrašą</a>

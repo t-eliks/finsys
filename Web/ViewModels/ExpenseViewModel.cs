@@ -10,8 +10,8 @@ namespace Web.ViewModels
         public double? Amount { get; set; }
 
         [Required]
-        public string Purpose { get; set; }
+        public string Origin { get; set; }
 
-        public string Note { get; set; }
+        public string Comment { get; set; }
     }
 }

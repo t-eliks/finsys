@@ -27,7 +27,7 @@
     {
         <tr>
             <td>@(Model.Expenses.IndexOf(expense) + 1)</td>
-            <td>@(expense.Purpose)</td>
+            <td>@(expense.Origin)</td>
             <td>@expense.Amount.ToString("F2") €</td>
             <td>@(expense.Comment ?? "-")</td>
             <td>@expense.CreationDate.ToString("yyyy-MM-dd")</td>

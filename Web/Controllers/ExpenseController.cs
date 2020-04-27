@@ -39,8 +39,8 @@ namespace Web.Controllers
             {
                 Id = expense.Id,
                 Amount = expense.Amount,
-                Purpose = expense.Purpose,
-                Note = expense.Comment
+                Origin = expense.Origin,
+                Comment = expense.Comment
             });
         }
 
@@ -126,8 +126,8 @@ namespace Web.Controllers
             var expense = new Expense
             {
                 Amount = viewModel.Amount.Value,
-                Comment = viewModel.Note,
-                Purpose = viewModel.Purpose,
+                Comment = viewModel.Comment,
+                Origin = viewModel.Origin,
                 CreationDate = DateTime.UtcNow
             };
 
@@ -148,7 +148,7 @@ namespace Web.Controllers
                 return "Kiekis turi būti daugiau už 0.";
             }
 
-            if (string.IsNullOrWhiteSpace(viewModel.Purpose))
+            if (string.IsNullOrWhiteSpace(viewModel.Origin))
             {
                 return "Paskirties laukas turi būti užpildytas.";
             }
@@ -159,8 +159,8 @@ namespace Web.Controllers
         private void UpdateExpense(Expense expense, ExpenseViewModel viewModel)
         {
             expense.Amount = viewModel.Amount.Value;
-            expense.Comment = viewModel.Note;
-            expense.Purpose = viewModel.Purpose;
+            expense.Comment = viewModel.Comment;
+            expense.Origin = viewModel.Origin;
             expense.UpdateDate = DateTime.UtcNow;
 
             repository.Update(expense);
