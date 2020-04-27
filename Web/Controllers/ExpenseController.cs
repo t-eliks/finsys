@@ -40,7 +40,7 @@ namespace Web.Controllers
                 Id = expense.Id,
                 Amount = expense.Amount,
                 Purpose = expense.Purpose,
-                Note = expense.Note
+                Note = expense.Comment
             });
         }
 
@@ -126,9 +126,9 @@ namespace Web.Controllers
             var expense = new Expense
             {
                 Amount = viewModel.Amount.Value,
-                Note = viewModel.Note,
+                Comment = viewModel.Note,
                 Purpose = viewModel.Purpose,
-                CreatedOn = DateTime.UtcNow
+                CreationDate = DateTime.UtcNow
             };
 
             repository.Add(expense);
@@ -159,9 +159,9 @@ namespace Web.Controllers
         private void UpdateExpense(Expense expense, ExpenseViewModel viewModel)
         {
             expense.Amount = viewModel.Amount.Value;
-            expense.Note = viewModel.Note;
+            expense.Comment = viewModel.Note;
             expense.Purpose = viewModel.Purpose;
-            expense.UpdatedOn = DateTime.UtcNow;
+            expense.UpdateDate = DateTime.UtcNow;
 
             repository.Update(expense);
 
