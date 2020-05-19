@@ -1,0 +1,30 @@
+﻿@model Web.ViewModels.IncomeViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var isAdd = Model.Id == 0;
+    var title = isAdd ? "Pridėti pajamas" : "Redaguoti pajamas";
+
+    ViewData["Title"] = title;
+}
+
+<h1>@(title)</h1>
+
+@using (Html.BeginForm(isAdd ? "CreateIncome" : "EditIncome", "Income", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+    <div class="form-group">
+        <label for="source">Šaltinis*</label>
+        @Html.TextBoxFor(x => x.Source, new { @placeholder = "Šaltinis", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label for="amount">Kiekis (€)*</label>
+        @Html.TextBoxFor(x => x.Amount, new { @placeholder = "Kiekis", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label for="comment">Pastaba</label>
+        @Html.TextBoxFor(x => x.Comment, new { @placeholder = "Pastaba", @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">@(isAdd ? "Pridėti" : "Redaguoti")</button>
+    <a class="btn btn-outline-secondary" asp-controller="Income" asp-action="OpenIncomeList">Grįžti į sąrašą</a>
+}
