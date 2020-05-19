@@ -21,10 +21,10 @@ namespace Web.Controllers.Budget
         [Route("expenses")]
         public IActionResult OpenExpenseList()
         {
-            return View("ExpenseList", new ExpenseListViewModel { Expenses = SelectUsersExpenses() });
+            return View("ExpenseList", new ExpenseListViewModel {Expenses = SelectUsersExpenses()});
         }
 
-        [Route("edit/{id:int}")]
+        [Route("expense/edit/{id:int}")]
         [HttpGet]
         public IActionResult EditSelected(int id)
         {
@@ -71,7 +71,7 @@ namespace Web.Controllers.Budget
 
             var expenses = SelectUsersExpenses();
 
-            return View("ExpenseList", new ExpenseListViewModel { Expenses = expenses });
+            return View("ExpenseList", new ExpenseListViewModel {Expenses = expenses});
         }
 
         [HttpGet]
@@ -98,13 +98,14 @@ namespace Web.Controllers.Budget
 
             var expenses = SelectUsersExpenses();
 
-            return View("ExpenseList", new ExpenseListViewModel { Expenses = expenses });
+            return View("ExpenseList", new ExpenseListViewModel {Expenses = expenses});
         }
 
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            return PartialView("DeleteConfirmForm", new DeleteExpenseViewModel { Id = id });
+            return PartialView("DeleteConfirmForm",
+                new DeletionViewModel {LtName = "išlaidą", Id = id, Controller = "Expense", Method = "DeleteExpense"});
         }
 
         [HttpDelete]
