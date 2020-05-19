@@ -1,0 +1,22 @@
+﻿@model Web.ViewModels.CategoryViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var isAdd = Model.Id == 0;
+    var title = isAdd ? "Pridėti kategoriją" : "Redaguoti kategoriją";
+
+    ViewData["Title"] = title;
+}
+
+<h1>@(title)</h1>
+
+@using (Html.BeginForm(isAdd ? "Create" : "Edit", "Category", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+    <div class="form-group">
+        <label for="Name">Pavadinimas*</label>
+        @Html.TextBoxFor(x => x.Name, new { @placeholder = "Pavadinimas", @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">@(isAdd ? "Pridėti" : "Redaguoti")</button>
+    <a class="btn btn-outline-secondary" asp-controller="Category" asp-action="OpenCategoriesList">Grįžti į sąrašą</a>
+}

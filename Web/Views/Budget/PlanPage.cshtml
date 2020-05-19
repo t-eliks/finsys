@@ -1,0 +1,45 @@
+﻿@using Web.Helpers
+@model Web.ViewModels.PlanBudgetViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Biudžeto planavimas";
+    ViewData["Menu"] = "BudgetPlanning";
+    ViewData["BreadCrumbs"] = new BreadCrumb()
+        .Append(SiteCrumbs.Home(Url))
+        .Append(SiteCrumbs.BudgetPlanning(Url));
+}
+<h1>Biudžeto planavimas</h1>
+
+<div id="js-goals">
+    <h3>Pajamų tikslai kategorijoms:</h3>
+    <!-- ko foreach: goalArray -->
+    <div class="form-inline">
+        <div class="form-group mb-2 margin-between">
+                <select class="form-control"
+                                data-bind="options: categoryOptions, 
+                                    optionsValue: function(item) { return item.id }, 
+                                    optionsText: function(item) { return item.name; }, 
+                                    optionsCaption: 'Pasirinkite kategoriją',
+                                    value: categoryId"></select>
+            <input data-bind="value: limit" class="form-control"/>
+            <div class="mb-2">
+                <button class="btn btn-primary" data-bind="click: save">Išsaugoti</button>
+                <button class="btn btn-secondary" data-bind="click: remove">Pašalinti</button>
+            </div>
+            </div>
+    </div>
+    
+    <!-- /ko -->
+    
+    <div class="new-goal">
+        <button class="btn btn-primary" data-bind="click: addGoalRow">Pridėti tikslą</button>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        window.formModel = @Html.Raw(Json.Serialize(Model));
+        window.saveGoalUrl = '@Url.Action("SubmitGoal", "Budget")';
+    </script>
+    <script type="text/javascript" src="~/js/planPage.js"></script>
+}
