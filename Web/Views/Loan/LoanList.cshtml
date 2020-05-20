@@ -1,0 +1,42 @@
+﻿@model Web.ViewModels.LoanListViewModel
+@using Web.Helpers
+@{
+    ViewData["Title"] = "Paskolų sąrašas";
+    ViewData["Menu"] = "LoanList";
+    ViewData["BreadCrumbs"] = new BreadCrumb()
+        .Append(SiteCrumbs.Home(Url))
+        .Append(SiteCrumbs.LoanList(Url));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Paskolos</h1>
+
+<div class="align-right margin-min">
+    <a class="btn btn-primary" asp-action="Create" asp-controller="Loan">
+        <span class="fas fa-plus"/> <span>Kurti</span>
+    </a>
+</div>
+<table class="table borderless">
+    <tr>
+        <th>#</th>
+        <th>Suma</th>
+        <th>Palūkanos</th>
+        <th>Terminas</th>
+        <th>Išdavėjas</th>
+        <th></th>
+    </tr>
+
+    @foreach (var loan in Model.Loans)
+    {
+        <tr>
+            <td>@(Model.Loans.IndexOf(loan) + 1)</td>
+            <td>@loan.Sum.ToString("F") €</td>
+            <td>@loan.Interest %</td>
+            <td>@loan.Term.ToShortDateString()</td>
+            <td>@loan.Provider</td>
+            <td>
+                <a class="btn btn-outline-secondary" asp-controller="Loan" asp-action="Loan" asp-route-id="@loan.Id">Detaliau</a>
+            </td>
+        </tr>
+    }
+
+</table>

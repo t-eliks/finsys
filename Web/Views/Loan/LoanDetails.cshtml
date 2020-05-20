@@ -1,0 +1,51 @@
+﻿@model Web.ViewModels.LoanViewModel
+@using Web.Helpers
+@{
+    ViewData["Title"] = "Paskolų sąrašas";
+    ViewData["Menu"] = "LoanList";
+    ViewData["BreadCrumbs"] = new BreadCrumb()
+        .Append(SiteCrumbs.Home(Url))
+        .Append(SiteCrumbs.LoanList(Url));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Paskola</h1>
+
+<div class="align-right margin-min">
+    <a class="btn btn-outline-secondary" asp-controller="Loan" asp-action="Index">Grįžti į sąrašą</a>
+</div>
+
+<table class="table borderless">
+    <tr>
+        <th>#</th>
+        <td>@Model.Id</td>
+    </tr>
+    <tr>
+        <th>Suma</th>
+        <td>@Model.Sum.ToString("F") €</td>
+    </tr>
+    <tr>
+        <th>Palūkanos</th>
+        <td>@Model.Interest %</td>
+    </tr>
+    <tr>
+        <th>Terminas</th>
+        <td>@Model.Term.ToShortDateString()</td>
+    </tr>
+    <tr>
+        <th>Išdavėjas</th>
+        <td>@Model.Provider</td>
+    </tr>
+    <tr>
+        <th>Grąžinta suma</th>
+        <td>@Model.ReturnedSum €</td>
+    </tr>
+    <tr>
+        <th>Tipas</th>
+        <td>@(Model.Type == "Consumer" ? "Vartojimo" : "Būsto")</td>
+    </tr>
+</table>
+
+<div class="margin-min">
+    <a class="btn btn-primary" asp-controller="Loan" asp-action="Edit" asp-route-id="@Model.Id">Redaguoti</a>
+    @* <a class="btn btn-danger" href="@Url.Action("Delete", "Loan", new { id = loan.Id })" rel="modal:open"><span class="fas fa-trash" /></a> *@
+</div>
