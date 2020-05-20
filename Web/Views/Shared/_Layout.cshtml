@@ -19,7 +19,7 @@
             <a class="@ActiveLinkHelper.IsActiveLink("ExpenseList", ViewData)" asp-controller="Expense" asp-action="OpenExpenseList">Išlaidos</a>
             <a href="#">Kategorijų valdymas</a>
             <a href="#">Pensijų Fondas</a>
-            <a href="#">Akcijos</a>
+            <a class="@ActiveLinkHelper.IsActiveLink("StockList", ViewData)" asp-controller="Investment" asp-action="OpenStockList">Akcijos</a>
             <a href="#">Nekilnojamasis Turtas</a>
             <a href="#">Finansiniai Straipsniai</a>
         </div>

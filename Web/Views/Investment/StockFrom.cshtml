@@ -1,0 +1,33 @@
+﻿@model Web.ViewModels.StockViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var isAdd = Model.Id == 0;
+    var title = isAdd ? "Pridėti akciją" : "Redaguoti akciją";
+
+    ViewData["Title"] = title;
+}
+
+<h1>@(title)</h1>
+
+@using (Html.BeginForm(isAdd ? "CreateNewStock" : "UpdateStock", "Investment", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        @Html.TextBoxFor(x => x.Name, new {@class = "form-control" })
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Company"></label>
+        @Html.TextBoxFor(x => x.Company, new {@class = "form-control" })
+        <span asp-validation-for="Company" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Amount"></label>
+        @Html.TextBoxFor(x => x.Amount, new {@class = "form-control" })
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">@(isAdd ? "Pridėti" : "Redaguoti")</button>
+    <a class="btn btn-outline-secondary" asp-controller="Investment" asp-action="OpenStockList">Grįžti į sąrašą</a>
+}

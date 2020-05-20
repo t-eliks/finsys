@@ -104,7 +104,13 @@ namespace Web.Controllers.Budget
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            return PartialView("DeleteConfirmForm", new DeleteExpenseViewModel { Id = id });
+            return PartialView("DeleteConfirmForm", new DeleteViewModel
+            {
+                Id = id,
+                Controller = "Expense",
+                Method = "DeleteExpense",
+                Message = "išlaidą"
+            });
         }
 
         [HttpDelete]
