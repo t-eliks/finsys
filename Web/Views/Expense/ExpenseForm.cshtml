@@ -10,21 +10,36 @@
 
 <h1>@(title)</h1>
 
-@using (Html.BeginForm(isAdd ? "Create" : "EditExpense", "Expense", FormMethod.Post))
-{
+<form id="js-expense-form">
     @Html.HiddenFor(x => x.Id)
     <div class="form-group">
-        <label for="Purpose">Paskirtis*</label>
-        @Html.TextBoxFor(x => x.Origin, new { @placeholder = "Paskirtis", @class = "form-control" })
+        <label for="Category">Kategorija*</label>
+        <select class="form-control" id="Category" data-bind="options: categoryOptions, 
+                                                   optionsValue: function(item) { return item.id }, 
+                                                   optionsText: function(item) { return item.name; }, 
+                                                   optionsCaption: 'Pasirinkite kategoriją',
+                                                   value: viewModel.categoryId"></select>
     </div>
     <div class="form-group">
-        <label for="Purpose">Kiekis (€)*</label>
-        @Html.TextBoxFor(x => x.Amount, new { @placeholder = "Kiekis", @class = "form-control" })
+        <label for="Origin">Paskirtis*</label>
+        @Html.TextBoxFor(x => x.Origin, new {@placeholder = "Paskirtis", @class = "form-control", data_bind = $"value: viewModel.{nameof(Model.Origin).ToLower()}"})
     </div>
     <div class="form-group">
-        <label for="Purpose">Pastaba</label>
-        @Html.TextBoxFor(x => x.Comment, new { @placeholder = "Pastaba", @class = "form-control" })
+        <label for="Amount">Kiekis (€)*</label>
+        @Html.TextBoxFor(x => x.Amount, new {@placeholder = "Kiekis", @class = "form-control", data_bind = $"value: viewModel.{nameof(Model.Amount).ToLower()}"})
     </div>
-    <button type="submit" class="btn btn-primary">@(isAdd ? "Pridėti" : "Redaguoti")</button>
+    <div class="form-group">
+        <label for="Comment">Pastaba</label>
+        @Html.TextBoxFor(x => x.Comment, new {@placeholder = "Pastaba", @class = "form-control", data_bind = $"value: viewModel.{nameof(Model.Comment).ToLower()}"})
+    </div>
+    <button data-bind="click: save" class="btn btn-primary">@(isAdd ? "Pridėti" : "Redaguoti")</button>
     <a class="btn btn-outline-secondary" asp-controller="Expense" asp-action="OpenExpenseList">Grįžti į sąrašą</a>
+</form>
+
+@section Scripts {
+    <script>
+        window.formModel = @Html.Raw(Json.Serialize(Model));
+        window.saveUrl = '@Url.Action(isAdd ? "Create" : "EditExpense", "Expense")';
+    </script>
+    <script type="text/javascript" src="~/js/expenseForm.js"></script>
 }

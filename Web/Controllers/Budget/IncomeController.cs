@@ -26,26 +26,34 @@ namespace Web.Controllers.Budget
 
         [Route("income/edit/{id:int}")]
         [HttpGet]
-        public IActionResult OpenEditForm(int id)
+        public IActionResult OpenEditForm([FromRoute] int id)
         {
-            var income = repository.Income.FirstOrDefault(x => x.Id == id);
+            var allCategories = GetAllCategories();
+            
+            var income = repository.Income
+                .Select(x => new IncomeViewModel
+                {
+                    Id = x.Id,
+                    Amount = x.Amount,
+                    Source = x.Source,
+                    Comment = x.Comment,
+                    Category = x.Category.Name,
+                    CategoryId = x.Category.Id,
+                    CreationDate = x.CreationDate,
+                    AvailableCategories = allCategories
+                })
+                .FirstOrDefault(x => x.Id == id);
 
             if (income == null)
             {
                 return View("IncomeList");
             }
 
-            return View("IncomeForm", new IncomeViewModel
-            {
-                Id = income.Id,
-                Amount = income.Amount,
-                Source = income.Source,
-                Comment = income.Comment
-            });
+            return View("IncomeForm", income);
         }
         
         [HttpPost]
-        public IActionResult EditIncome(IncomeViewModel viewModel)
+        public IActionResult EditIncome([FromBody] IncomeViewModel viewModel)
         {
             var validation = ValidateData(viewModel);
 
@@ -107,11 +115,11 @@ namespace Web.Controllers.Budget
         [HttpGet]
         public IActionResult OpenCreationForm()
         {
-            return View("IncomeForm", new IncomeViewModel());
+            return View("IncomeForm", new IncomeViewModel() { AvailableCategories = GetAllCategories()});
         }
 
         [HttpPost]
-        public IActionResult CreateIncome(IncomeViewModel viewModel)
+        public IActionResult CreateIncome([FromBody] IncomeViewModel viewModel)
         {
             var validation = ValidateData(viewModel);
 
@@ -159,7 +167,8 @@ namespace Web.Controllers.Budget
                 Amount = viewModel.Amount.Value,
                 Comment = viewModel.Comment,
                 Source = viewModel.Source,
-                CreationDate = DateTime.UtcNow
+                CreationDate = DateTime.UtcNow,
+                Category = repository.Categories.FirstOrDefault(x => x.Id == viewModel.Id)
             };
 
             repository.Add(income);
@@ -193,20 +202,43 @@ namespace Web.Controllers.Budget
             income.Comment = viewModel.Comment;
             income.Source = viewModel.Source;
             income.UpdateDate = DateTime.UtcNow;
+            income.Category = repository.Categories.FirstOrDefault(x => x.Id == viewModel.Id);
 
             repository.Update(income);
 
             repository.SaveChanges();
         }
 
-        private IList<Income> FetchUserIncomeList()
+        private IList<IncomeViewModel> FetchUserIncomeList()
         {
-            return repository.Income.ToList();
+            return repository.Income
+                .Select(x => new IncomeViewModel
+                {
+                    Id = x.Id,
+                    Amount = x.Amount,
+                    Category = x.Category.Name,
+                    CategoryId = x.Category.Id,
+                    Comment = x.Comment,
+                    Source = x.Source,
+                    CreationDate = x.CreationDate
+                })
+                .ToList();
         }
 
         private Income FetchIncome(int id)
         {
             return repository.Income.FirstOrDefault(x => x.Id == id);
+        }
+        
+        private IList<CategoryViewModel> GetAllCategories()
+        {
+            return repository.Categories
+                .Select(x => new CategoryViewModel
+                {
+                    Name = x.Name,
+                    Id = x.Id
+                })
+                .ToList();
         }
     }
 }

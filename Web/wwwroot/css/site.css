@@ -114,3 +114,11 @@ span {
 .margin-between > * {
   margin-left: 10px;
 }
+
+.success-color {
+  color: green;
+}
+
+.fail-color {
+  color: red;
+}

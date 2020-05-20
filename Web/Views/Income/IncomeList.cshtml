@@ -11,11 +11,14 @@
 <h1>Pajamos</h1>
 
 <div class="align-right margin-min">
-    <a class="btn btn-primary" asp-action="OpenCreationForm" asp-controller="Income"><span class="fas fa-plus" /> <span>Kurti</span></a>
+    <a class="btn btn-primary" asp-action="OpenCreationForm" asp-controller="Income">
+        <span class="fas fa-plus"/> <span>Kurti</span>
+    </a>
 </div>
 <table class="table borderless">
     <tr>
         <th>#</th>
+        <th>Kategorija</th>
         <th>Šaltinis</th>
         <th>Kiekis</th>
         <th>Pastaba</th>
@@ -27,13 +30,16 @@
     {
         <tr>
             <td>@(Model.Income.IndexOf(income) + 1)</td>
+            <td>@(income.Category ?? "-")</td>
             <td>@(income.Source)</td>
-            <td>@income.Amount.ToString("F2") €</td>
+            <td>@income.Amount?.ToString("F2") €</td>
             <td>@(income.Comment ?? "-")</td>
-            <td>@income.CreationDate.ToString("yyyy-MM-dd")</td>
+            <td>@income.CreationDate?.ToString("yyyy-MM-dd")</td>
             <td>
                 <a class="btn btn-outline-secondary" asp-controller="Income" asp-action="OpenEditForm" asp-route-id="@income.Id">Redaguoti</a>
-                <a class="btn btn-danger" href="@Url.Action("Delete", "Income", new { id = income.Id })" rel="modal:open"><span class="fas fa-trash" /></a>
+                <a class="btn btn-danger" href="@Url.Action("Delete", "Income", new {id = income.Id})" rel="modal:open">
+                    <span class="fas fa-trash"/>
+                </a>
             </td>
         </tr>
     }

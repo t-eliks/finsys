@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Web.ViewModels;
 
 namespace Web.Controllers.Budget
@@ -28,24 +29,32 @@ namespace Web.Controllers.Budget
         [HttpGet]
         public IActionResult EditSelected(int id)
         {
-            var expense = repository.Expenses.FirstOrDefault(x => x.Id == id);
+            var allCategories = GetAllCategories();
+            
+            var expense = repository.Expenses
+                .Select(x => new ExpenseViewModel
+                {
+                    Id = x.Id,
+                    Comment = x.Comment,
+                    Origin = x.Origin,
+                    Category = x.Category.Name,
+                    CategoryId = x.Category.Id,
+                    Amount = x.Amount,
+                    CreationDate = x.CreationDate,
+                    AvailableCategories = allCategories
+                })
+                .FirstOrDefault(x => x.Id == id);
 
             if (expense == null)
             {
                 return View("ExpenseList");
             }
 
-            return View("ExpenseForm", new ExpenseViewModel
-            {
-                Id = expense.Id,
-                Amount = expense.Amount,
-                Origin = expense.Origin,
-                Comment = expense.Comment
-            });
+            return View("ExpenseForm", expense);
         }
 
         [HttpPost]
-        public IActionResult EditExpense(ExpenseViewModel viewModel)
+        public IActionResult EditExpense([FromBody] ExpenseViewModel viewModel)
         {
             var validation = ValidateData(viewModel);
 
@@ -77,11 +86,11 @@ namespace Web.Controllers.Budget
         [HttpGet]
         public IActionResult CreateForm()
         {
-            return View("ExpenseForm", new ExpenseViewModel());
+            return View("ExpenseForm", new ExpenseViewModel() { AvailableCategories = GetAllCategories()});
         }
 
         [HttpPost]
-        public IActionResult Create(ExpenseViewModel viewModel)
+        public IActionResult Create([FromBody] ExpenseViewModel viewModel)
         {
             var validation = ValidateData(viewModel);
 
@@ -89,7 +98,7 @@ namespace Web.Controllers.Budget
             {
                 TempData["Error"] = validation;
 
-                return View("ExpenseForm", viewModel);
+                return PartialView("ExpenseForm", viewModel);
             }
 
             InsertNewExpense(viewModel);
@@ -129,7 +138,8 @@ namespace Web.Controllers.Budget
                 Amount = viewModel.Amount.Value,
                 Comment = viewModel.Comment,
                 Origin = viewModel.Origin,
-                CreationDate = DateTime.UtcNow
+                CreationDate = DateTime.UtcNow,
+                Category = repository.Categories.FirstOrDefault(x => x.Id == viewModel.CategoryId)
             };
 
             repository.Add(expense);
@@ -163,20 +173,44 @@ namespace Web.Controllers.Budget
             expense.Comment = viewModel.Comment;
             expense.Origin = viewModel.Origin;
             expense.UpdateDate = DateTime.UtcNow;
+            expense.Category = repository.Categories.FirstOrDefault(x => x.Id == viewModel.CategoryId);
 
             repository.Update(expense);
 
             repository.SaveChanges();
         }
 
-        private IList<Expense> SelectUsersExpenses()
+        private IList<ExpenseViewModel> SelectUsersExpenses()
         {
-            return repository.Expenses.ToList();
+            return repository.Expenses
+                .Select(x => new ExpenseViewModel
+                {
+                    Origin = x.Origin,
+                    Comment = x.Comment,
+                    Category = x.Category.Name,
+                    Amount = x.Amount,
+                    Id = x.Id,
+                    CreationDate = x.CreationDate
+                })
+                .ToList();
         }
 
         private Expense FetchExpense(int id)
         {
-            return repository.Expenses.FirstOrDefault(x => x.Id == id);
+            return repository.Expenses
+                .Include(x => x.Category)
+                .FirstOrDefault(x => x.Id == id);
+        }
+
+        private IList<CategoryViewModel> GetAllCategories()
+        {
+            return repository.Categories
+                .Select(x => new CategoryViewModel
+                {
+                    Name = x.Name,
+                    Id = x.Id
+                })
+                .ToList();
         }
     }
 }

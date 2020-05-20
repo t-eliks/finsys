@@ -1,6 +1,6 @@
 ﻿namespace Web.ViewModels
 {
-    public class GoalViewModel
+    public class LimitViewModel
     {
         public int? Id { get; set; }
         

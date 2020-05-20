@@ -14,32 +14,81 @@
     <h3>Pajamų tikslai kategorijoms:</h3>
     <!-- ko foreach: goalArray -->
     <div class="form-inline">
-        <div class="form-group mb-2 margin-between">
+        <div class="container">
+            <div class="form-group mb-2 margin-between">
                 <select class="form-control"
-                                data-bind="options: categoryOptions, 
-                                    optionsValue: function(item) { return item.id }, 
-                                    optionsText: function(item) { return item.name; }, 
-                                    optionsCaption: 'Pasirinkite kategoriją',
-                                    value: categoryId"></select>
-            <input data-bind="value: limit" class="form-control"/>
-            <div class="mb-2">
-                <button class="btn btn-primary" data-bind="click: save">Išsaugoti</button>
-                <button class="btn btn-secondary" data-bind="click: remove">Pašalinti</button>
+                        data-bind="options: categoryOptions, 
+                                                optionsValue: function(item) { return item.id }, 
+                                                optionsText: function(item) { return item.name; }, 
+                                                optionsCaption: 'Pasirinkite kategoriją',
+                                                value: categoryId">
+                </select>
+                <input data-bind="value: limit" class="form-control"/>
+                <div class="mb-2">
+                    <button class="btn btn-primary" data-bind="click: saveGoal">Išsaugoti</button>
+                    <button class="btn btn-secondary" data-bind="click: removeGoal">Pašalinti</button>
+                </div>
             </div>
+            <div class="row">
+                <span>Pajamos šioje kategorijoje: </span>
+                <span data-bind="text: actualAmount() + ', €', css: { 'success-color': actualAmount() >= limit(), 
+                                                            'fail-color': actualAmount() < limit() }" style="margin-left: 5px"></span>
             </div>
+            <hr/>
+        </div>
     </div>
-    
+
     <!-- /ko -->
-    
+
     <div class="new-goal">
         <button class="btn btn-primary" data-bind="click: addGoalRow">Pridėti tikslą</button>
     </div>
+    <hr/>
+</div>
+
+<div id="js-limits">
+    <h3>Limitai kategorijoms:</h3>
+    <!-- ko foreach: limitArray -->
+    <div class="form-inline">
+        <div class="container">
+            <div class="form-group mb-2 margin-between">
+                <select class="form-control"
+                        data-bind="options: categoryOptions, 
+                                                optionsValue: function(item) { return item.id }, 
+                                                optionsText: function(item) { return item.name; }, 
+                                                optionsCaption: 'Pasirinkite kategoriją',
+                                                value: categoryId">
+                </select>
+                <input data-bind="value: limit" class="form-control"/>
+                <div class="mb-2">
+                    <button class="btn btn-primary" data-bind="click: saveLimit">Išsaugoti</button>
+                    <button class="btn btn-secondary" data-bind="click: removeLimit">Pašalinti</button>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <span>Išlaidos šioje kategorijoje: </span>
+                <span data-bind="text: actualAmount() + ', €', css: { 'success-color': actualAmount() <= limit(), 
+                                                            'fail-color': actualAmount() > limit() }" style="margin-left: 5px"></span>
+            </div>
+            <hr/>
+        </div>
+    </div>
+
+    <!-- /ko -->
+
+    <div class="new-goal">
+        <button class="btn btn-primary" data-bind="click: addLimitRow">Pridėti limitą</button>
+    </div>
+    <hr/>
 </div>
 
 @section Scripts {
     <script>
         window.formModel = @Html.Raw(Json.Serialize(Model));
         window.saveGoalUrl = '@Url.Action("SubmitGoal", "Budget")';
+        window.saveLimitUrl = '@Url.Action("SubmitLimit", "Budget")';
+        window.removeGoalUrl = '@Url.Action("RemoveGoal", "Budget")';
+        window.removeLimitUrl = '@Url.Action("RemoveLimit", "Budget")';
     </script>
     <script type="text/javascript" src="~/js/planPage.js"></script>
 }

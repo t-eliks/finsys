@@ -22,6 +22,8 @@ namespace DataAccess
 
         public virtual DbSet<Goal> Goals { get; set; }
         
+        public virtual DbSet<Limit> Limits { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

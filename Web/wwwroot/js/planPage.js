@@ -14,15 +14,22 @@
                 id: 0,
                 limit: '',
                 categoryOptions: categories,
-                categoryId: 0
+                categoryId: 0,
+                actualAmount: 0
             }));
         }
 
-        self.remove = function(row) {
-            self.goalArray.remove(row);
+        self.removeGoal = function(row) {
+            $.ajax({
+                url: window.removeGoalUrl + '/' + row.id(),
+                type: 'DELETE'
+            })
+                .done(function () {
+                    self.goalArray.remove(row);
+                });
         }
         
-        self.save = function(row) {
+        self.saveGoal = function(row) {
             $.ajax({
                 url: window.saveGoalUrl,
                 contentType: 'application/json',
@@ -34,17 +41,65 @@
                 })
             })
                 .done(function (response) {
-                    console.log('Saved');
+                    row.actualAmount(response);
+                });
+        }
+    }
+
+    function LimitsViewModel(limits, categories) {
+        self.limitArray = ko.observableArray([]);
+        self.categoryArray = ko.observableArray(categories);
+
+        limits.forEach(function (limit) {
+            self.limitArray.push(ko.viewmodel.fromModel($.extend(limit, { categoryOptions: categories })));
+        });
+
+        self.addLimitRow = function () {
+            self.limitArray.push(ko.viewmodel.fromModel({
+                id: 0,
+                limit: '',
+                categoryOptions: categories,
+                categoryId: 0,
+                actualAmount: 0
+            }));
+        }
+
+        self.removeLimit = function(row) {
+            $.ajax({
+                url: window.removeLimitUrl + '/' + row.id(),
+                type: 'DELETE'
+            })
+                .done(function () {
+                    self.limitArray.remove(row);
+                });
+        }
+
+        self.saveLimit = function(row) {
+            $.ajax({
+                url: window.saveLimitUrl,
+                contentType: 'application/json',
+                type: 'POST',
+                data: JSON.stringify({
+                    Id: row.id(),
+                    CategoryId: row.categoryId(),
+                    Limit: +row.limit()
+                })
+            })
+                .done(function (response) {
+                    console.log(response);
+                    row.actualAmount(response);
                 });
         }
     }
     
     function init() {
         const model = window.formModel;
-        console.log(model);
+
         const goalsViewModel = new GoalsViewModel(model.goals, model.categories);
+        const limitsViewModel = new LimitsViewModel(model.limits, model.categories);
         
         ko.applyBindings(goalsViewModel, $("#js-goals")[0]);
+        ko.applyBindings(limitsViewModel, $("#js-limits")[0]);
     }
     
     init();
