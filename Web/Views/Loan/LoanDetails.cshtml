@@ -47,5 +47,5 @@
 
 <div class="margin-min">
     <a class="btn btn-primary" asp-controller="Loan" asp-action="Edit" asp-route-id="@Model.Id">Redaguoti</a>
-    @* <a class="btn btn-danger" href="@Url.Action("Delete", "Loan", new { id = loan.Id })" rel="modal:open"><span class="fas fa-trash" /></a> *@
+    <a class="btn btn-danger" href="@Url.Action("Delete", "Loan", new { id = Model.Id })" rel="modal:open"><span class="fas fa-trash" /></a>
 </div>

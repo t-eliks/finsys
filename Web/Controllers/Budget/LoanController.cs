@@ -110,7 +110,7 @@ namespace Web.Controllers.Budget
             }
 
             var loan = repository.Loans.FirstOrDefault(x => x.Id == viewModel.Id);
-            
+
             if (loan == null)
             {
                 TempData["Error"] = "Įvyko klaida";
@@ -137,6 +137,28 @@ namespace Web.Controllers.Budget
                 ReturnedSum = loan.ReturnedSum,
                 Type = loan.Type
             });
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            return PartialView("DeleteConfirmForm", new DeletionViewModel
+            {
+                Id = id,
+                LtName = "paskolą",
+                Method = "DeleteLoan",
+                Controller = "Loan"
+            });
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteLoan(int id)
+        {
+            var loan = repository.Loans.FirstOrDefault(x => x.Id == id);
+            repository.Remove(loan);
+            repository.SaveChanges();
+            TempData["Success"] = "Paskola sėkmingai panaikinta";
+            return Ok(Url.Action("Index", "Loan"));
         }
 
         private string ValidateData(LoanViewModel viewModel)
