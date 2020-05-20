@@ -13,7 +13,7 @@ namespace DataAccess
         public virtual DbSet<User> Users { get; set; }
 
         public virtual DbSet<FinancialGuru> FinancialGurus { get; set; }
-        
+
         public virtual DbSet<Expense> Expenses { get; set; }
         
         public virtual DbSet<Loan> Loans { get; set; }
