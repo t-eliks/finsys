@@ -7,7 +7,7 @@ namespace DataAccess.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         
-        public double Limit { get; set; }
+        public double GoalAmount { get; set; }
         
         public virtual Category Category { get; set; }
     }

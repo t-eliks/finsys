@@ -23,7 +23,7 @@
                                                 optionsCaption: 'Pasirinkite kategoriją',
                                                 value: categoryId">
                 </select>
-                <input data-bind="value: limit" class="form-control"/>
+                <input data-bind="value: goal" class="form-control"/>
                 <div class="mb-2">
                     <button class="btn btn-primary" data-bind="click: saveGoal">Išsaugoti</button>
                     <button class="btn btn-secondary" data-bind="click: removeGoal">Pašalinti</button>
@@ -31,8 +31,10 @@
             </div>
             <div class="row">
                 <span>Pajamos šioje kategorijoje: </span>
-                <span data-bind="text: actualAmount() + ', €', css: { 'success-color': actualAmount() >= limit(), 
-                                                            'fail-color': actualAmount() < limit() }" style="margin-left: 5px"></span>
+                <span data-bind="text: actualAmount() + ', €', css: { 'success-color': success(actualAmount(), goal()), 
+                                                            'fail-color': fail(actualAmount(), goal()) }" style="margin-left: 5px"></span>
+                <span data-bind="visible: fail(actualAmount(), goal())" class="fail-color" style="margin-left: 10px">Jūs dar nepasiekėte savo pajamų tikslo šioje kategorijoje!</span>
+                <span data-bind="visible: success(actualAmount(), goal())" class="success-color" style="margin-left: 10px">Jūs pasiekėte savo pajamų tikslo šioje kategorijoje!</span>
             </div>
             <hr/>
         </div>
@@ -67,8 +69,10 @@
             </div>
             <div class="row mb-2">
                 <span>Išlaidos šioje kategorijoje: </span>
-                <span data-bind="text: actualAmount() + ', €', css: { 'success-color': actualAmount() <= limit(), 
-                                                            'fail-color': actualAmount() > limit() }" style="margin-left: 5px"></span>
+                <span data-bind="text: actualAmount() + ', €', css: { 'success-color': success(actualAmount(), limit()), 
+                                                                            'fail-color': fail(actualAmount(), limit()) }" style="margin-left: 5px"></span>
+                <span data-bind="visible: fail(actualAmount(), limit())" class="fail-color" style="margin-left: 10px">Jūs viršijote savo išlaidų limitą šioje kategorijoje!</span>
+                <span data-bind="visible: success(actualAmount(), limit())" class="success-color" style="margin-left: 10px">Jūs dar neviršijote savo išlaidų limito šioje kategorijoje!</span>
             </div>
             <hr/>
         </div>

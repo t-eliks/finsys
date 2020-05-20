@@ -82,36 +82,6 @@ namespace Web.Controllers.Budget
             return View("IncomeList", new IncomeListViewModel() {Income = incomeList});
         }
 
-        [HttpPost]
-        public IActionResult Submit(IncomeViewModel viewModel)
-        {
-            var validation = ValidateData(viewModel);
-
-            if (!string.IsNullOrWhiteSpace(validation))
-            {
-                TempData["Error"] = validation;
-
-                return View("IncomeForm", viewModel);
-            }
-
-            var income = FetchIncome(viewModel.Id);
-
-            if (income == null)
-            {
-                TempData["Error"] = "Something went wrong.";
-
-                return View("IncomeForm", viewModel);
-            }
-
-            TempData["Success"] = "Sėkmingai atnaujintos pajamos!";
-
-            UpdateIncome(income, viewModel);
-
-            var incomeList = FetchUserIncomeList();
-
-            return View("IncomeList", new IncomeListViewModel {Income = incomeList});
-        }
-
         [HttpGet]
         public IActionResult OpenCreationForm()
         {
@@ -168,7 +138,7 @@ namespace Web.Controllers.Budget
                 Comment = viewModel.Comment,
                 Source = viewModel.Source,
                 CreationDate = DateTime.UtcNow,
-                Category = repository.Categories.FirstOrDefault(x => x.Id == viewModel.Id)
+                Category = repository.Categories.FirstOrDefault(x => x.Id == viewModel.CategoryId)
             };
 
             repository.Add(income);

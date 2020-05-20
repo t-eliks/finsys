@@ -32,7 +32,7 @@ namespace Web.Controllers.Budget
             return Ok(sum);
         }
 
-        public int StoreGoal(GoalViewModel viewModel)
+        public double StoreGoal(GoalViewModel viewModel)
         {
             Goal goal;
             
@@ -46,12 +46,12 @@ namespace Web.Controllers.Budget
                 repository.Add(goal);
             }
 
-            goal.Limit = viewModel.Limit;
+            goal.GoalAmount = viewModel.Goal;
             goal.Category = repository.Categories.FirstOrDefault(x => x.Id == viewModel.CategoryId);
 
             repository.SaveChanges();
             
-            return (int) repository.Income.Where(x => x.Category == goal.Category).Sum(x => x.Amount);
+            return repository.Income.Where(x => x.Category == goal.Category).Sum(x => x.Amount);
         }
             
         [HttpPost]
@@ -63,7 +63,7 @@ namespace Web.Controllers.Budget
             return Ok(sum);
         }
         
-        public int StoreLimit(LimitViewModel viewModel)
+        public double StoreLimit(LimitViewModel viewModel)
         {
             Limit limit;
             
@@ -82,7 +82,7 @@ namespace Web.Controllers.Budget
 
             repository.SaveChanges();
             
-            return (int) repository.Expenses.Where(x => x.Category == limit.Category).Sum(x => x.Amount);
+            return repository.Expenses.Where(x => x.Category == limit.Category).Sum(x => x.Amount);
         }
 
         [HttpDelete]
@@ -125,7 +125,7 @@ namespace Web.Controllers.Budget
             return repository.Goals.Select(x => new GoalViewModel
             {
                 Id = x.Id,
-                Limit = x.Limit,
+                Goal = x.GoalAmount,
                 CategoryId = x.Category.Id
             }).ToList();
         }

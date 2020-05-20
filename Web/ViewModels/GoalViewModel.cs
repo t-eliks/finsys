@@ -4,7 +4,7 @@
     {
         public int? Id { get; set; }
         
-        public double Limit { get; set; }
+        public double Goal { get; set; }
         
         public int CategoryId { get; set; }
         
