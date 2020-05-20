@@ -10,5 +10,8 @@ namespace Web.Helpers
         public static CrumbViewModel ExpenseList(IUrlHelper urlHelper) => new CrumbViewModel { Name = "Išlaidos", Link = urlHelper.Action("OpenExpenseList", "Expense") };
         
         public static CrumbViewModel IncomeList(IUrlHelper urlHelper) => new CrumbViewModel { Name = "Pajamos", Link = urlHelper.Action("OpenIncomeList", "Income") };
+
+        public static CrumbViewModel ExportPage(IUrlHelper urlHelper) => new CrumbViewModel
+            {Name = "Duomenų eksportavimas", Link = urlHelper.Action("OpenExportPage", "ExternalData")};
     }
 }

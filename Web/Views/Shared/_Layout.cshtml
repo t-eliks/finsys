@@ -15,6 +15,7 @@
             <a href="#">Profilis</a>
             <a href="#">Pranešimai</a>
             <a href="#">Paskolos</a>
+            <a class="@ActiveLinkHelper.IsActiveLink("ExportPage", ViewData)" asp-controller="ExternalData" asp-action="OpenExportPage">Eksportuoti duomenis</a>
             <a class="@ActiveLinkHelper.IsActiveLink("IncomeList", ViewData)" asp-controller="Income" asp-action="OpenIncomeList">Pajamos</a>
             <a class="@ActiveLinkHelper.IsActiveLink("ExpenseList", ViewData)" asp-controller="Expense" asp-action="OpenExpenseList">Išlaidos</a>
             <a href="#">Kategorijų valdymas</a>
