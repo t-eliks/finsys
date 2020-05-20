@@ -18,6 +18,8 @@ namespace DataAccess
         
         public virtual DbSet<Loan> Loans { get; set; }
 
+        public DbSet<Income> Income { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
