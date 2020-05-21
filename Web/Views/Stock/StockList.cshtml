@@ -11,7 +11,7 @@
 <h1>Akcijos</h1>
 
 <div class="align-right margin-min">
-    <a class="btn btn-primary" asp-action="CreateStock" asp-controller="Investment"><span class="fas fa-plus" /> <span>Kurti</span></a>
+    <a class="btn btn-primary" asp-action="CreateStock" asp-controller="Stock"><span class="fas fa-plus" /> <span>Kurti</span></a>
 </div>
 <table class="table borderless">
     <tr>
@@ -30,8 +30,8 @@
             <td>@stock.Company</td>
             <td>@(stock.Amount)</td>
             <td>
-                <a class="btn btn-outline-secondary" asp-controller="Investment" asp-action="UpdateSelected" asp-route-id="@stock.Id">Redaguoti</a>
-                <a class="btn btn-danger" href="@Url.Action("DeleteSelected", "Investment", new { id = stock.Id })" rel="modal:open"><span class="fas fa-trash" /></a>
+                <a class="btn btn-outline-secondary" asp-controller="Stock" asp-action="UpdateSelected" asp-route-id="@stock.Id">Redaguoti</a>
+                <a class="btn btn-danger" href="@Url.Action("DeleteSelected", "Stock", new { id = stock.Id })" rel="modal:open"><span class="fas fa-trash" /></a>
             </td>
         </tr>
     }

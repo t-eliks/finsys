@@ -10,7 +10,7 @@
 
 <h1>@(title)</h1>
 
-@using (Html.BeginForm(isAdd ? "CreateNewStock" : "UpdateStock", "Investment", FormMethod.Post))
+@using (Html.BeginForm(isAdd ? "CreateNewStock" : "UpdateStock", "Stock", FormMethod.Post))
 {
     @Html.HiddenFor(x => x.Id)
     <div class="form-group">
@@ -29,5 +29,5 @@
         <span asp-validation-for="Amount" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">@(isAdd ? "Pridėti" : "Redaguoti")</button>
-    <a class="btn btn-outline-secondary" asp-controller="Investment" asp-action="OpenStockList">Grįžti į sąrašą</a>
+    <a class="btn btn-outline-secondary" asp-controller="Stock" asp-action="OpenStockList">Grįžti į sąrašą</a>
 }
