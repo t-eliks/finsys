@@ -1,0 +1,22 @@
+﻿@model Web.ViewModels.RealEstateViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var isAdd = Model.Id == 0;
+    var title = isAdd ? "Pridėti nekilnojamą turtą" : "Redaguoti nekilnojamą turtą";
+
+    ViewData["Title"] = title;
+}
+
+<h1>@(title)</h1>
+
+@using (Html.BeginForm(isAdd ? "Create" : "Edit", "RealEstate", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+    <div class="form-group">
+        <label for="Name">Pavadinimas*</label>
+        @Html.TextBoxFor(x => x.Name, new { @placeholder = "Pavadinimas", @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">@(isAdd ? "Pridėti" : "Redaguoti")</button>
+    <a class="btn btn-outline-secondary" asp-controller="RealEstate" asp-action="OpenRealEstateList">Grįžti į sąrašą</a>
+}

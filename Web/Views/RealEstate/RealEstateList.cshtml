@@ -1,0 +1,35 @@
+﻿@model Web.ViewModels.RealEstateListViewModel
+@using Web.Helpers
+@{
+    ViewData["Title"] = "Nekilnojomo turto valdymas";
+    ViewData["Menu"] = "RealEstateList";
+    ViewData["BreadCrumbs"] = new BreadCrumb()
+        .Append(SiteCrumbs.Home(Url))
+        .Append(SiteCrumbs.RealEstateList(Url));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Nekilnojomo turto valdymas</h1>
+
+<div class="align-right margin-min">
+    <a class="btn btn-primary" asp-action="OpenCreationForm" asp-controller="RealEstate"><span class="fas fa-plus" /> <span>Kurti</span></a>
+</div>
+<table class="table borderless">
+    <tr>
+        <th>#</th>
+        <th>Pavadinimas</th>
+        <th></th>
+    </tr>
+
+    @foreach (var realEstate in Model.RealEstates)
+    {
+        <tr>
+            <td>@(Model.RealEstates.IndexOf(realEstate) + 1)</td>
+            <td>@(realEstate.Name)</td>
+            <td>
+                <a class="btn btn-outline-secondary" asp-controller="RealEstate" asp-action="Edit" asp-route-id="@realEstate.Id">Redaguoti</a>
+                <a class="btn btn-danger" href="@Url.Action("Delete", "RealEstate", new { id = realEstate.Id })" rel="modal:open"><span class="fas fa-trash" /></a>
+            </td>
+        </tr>
+    }
+
+</table>
