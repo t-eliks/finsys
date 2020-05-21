@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using DataAccess;
 using DataAccess.Models;
@@ -68,7 +69,7 @@ namespace Web.Controllers.Budget
             string filePath = Path.GetTempFileName();
             string fileName = Regex.Replace(DateTime.Now.ToShortDateString(), @"\s+", "") + "-export-data.csv";
             
-            using (var w = new StreamWriter(filePath))
+            using (var w = new StreamWriter(filePath, false, Encoding.UTF8))
             {
                 WriteDataToFile(incomeList, expenses, w);
             }
@@ -91,12 +92,13 @@ namespace Web.Controllers.Budget
         }
         private static void WriteIncomeData(IList<Income> incomeList, StreamWriter writer)
         {
-            var header = $"{"Source"},{"Amount"},{"Comment"},{"Creation date"}";
+            var header = "Kategorija,Šaltinis,Kiekis,Komentaras,Sukūrimo data";
             writer.WriteLine("Income");
             writer.WriteLine(header);
             foreach (var income in incomeList)
             {
-                var line = $"{income.Source},{income.Amount},{income.Comment},{income.CreationDate}";
+                string category = income.Category != null ? income.Category.Name : "-";
+                var line = $"{category},{income.Source},{income.Amount},{income.Comment},{income.CreationDate}";
                 writer.WriteLine(line);
                 writer.Flush();
             }
@@ -104,12 +106,13 @@ namespace Web.Controllers.Budget
 
         private static void WriteExpenseData(IList<Expense> expenses, StreamWriter writer)
         {
-            var header = $"{"Origin"},{"Amount"},{"Comment"},{"Creation date"}";
+            var header = "Kategorija,Paskirtis,Kiekis,Pastaba,Sukūrimo data";
             writer.WriteLine("Expenses");
             writer.WriteLine(header);
             foreach (var expense in expenses)
             {
-                var line = $"{expense.Origin},{expense.Amount},{expense.Comment},{expense.CreationDate}";
+                string category = expense.Category != null ? expense.Category.Name : "-";
+                var line = $"{category},{expense.Origin},{expense.Amount},{expense.Comment},{expense.CreationDate}";
                 writer.WriteLine(line);
                 writer.Flush();
             }
