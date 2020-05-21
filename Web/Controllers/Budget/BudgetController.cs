@@ -27,12 +27,12 @@ namespace Web.Controllers.Budget
         [Route("goal")]
         public ActionResult SubmitGoal([FromBody] GoalViewModel viewModel)
         {
-            var sum = StoreGoal(viewModel);
+            var response = StoreGoal(viewModel);
 
-            return Ok(sum);
+            return Ok(new { Id = response.Item1, ActualAmount = response.Item2 });
         }
 
-        public double StoreGoal(GoalViewModel viewModel)
+        public (int, double) StoreGoal(GoalViewModel viewModel)
         {
             Goal goal;
             
@@ -50,20 +50,22 @@ namespace Web.Controllers.Budget
             goal.Category = repository.Categories.FirstOrDefault(x => x.Id == viewModel.CategoryId);
 
             repository.SaveChanges();
+
+            var sum = repository.Income.Where(x => x.Category == goal.Category).Sum(x => x.Amount);
             
-            return repository.Income.Where(x => x.Category == goal.Category).Sum(x => x.Amount);
+            return (goal.Id, sum);
         }
             
         [HttpPost]
         [Route("limit")]
         public ActionResult SubmitLimit([FromBody] LimitViewModel viewModel)
         {
-            var sum = StoreLimit(viewModel);
+            var response = StoreLimit(viewModel);
 
-            return Ok(sum);
+            return Ok(new { Id = response.Item1, ActualAmount = response.Item2 });
         }
         
-        public double StoreLimit(LimitViewModel viewModel)
+        public (int, double) StoreLimit(LimitViewModel viewModel)
         {
             Limit limit;
             
@@ -82,7 +84,9 @@ namespace Web.Controllers.Budget
 
             repository.SaveChanges();
             
-            return repository.Expenses.Where(x => x.Category == limit.Category).Sum(x => x.Amount);
+            var sum = repository.Expenses.Where(x => x.Category == limit.Category).Sum(x => x.Amount);
+
+            return (limit.Id, sum);
         }
 
         [HttpDelete]

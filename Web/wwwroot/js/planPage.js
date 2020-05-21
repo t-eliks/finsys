@@ -2,6 +2,8 @@
     const ko = window.ko;
 
     function GoalsViewModel(goals, categories) {
+        var self = this;
+
         self.goalArray = ko.observableArray([]);
         self.categoryArray = ko.observableArray(categories);
 
@@ -19,12 +21,12 @@
             }));
         }
 
-        self.success = function (amount, goal) {
-            return amount >= goal;
+        self.success = function (id, amount, goal) {
+            return id && amount >= goal;
         };
 
-        self.fail = function (amount, goal) {
-            return !self.success(amount, goal);
+        self.fail = function (id, amount, goal) {
+            return id && !self.success(id, amount, goal);
         };
 
         self.removeGoal = function (row) {
@@ -49,12 +51,15 @@
                 })
             })
                 .done(function (response) {
-                    row.actualAmount(response);
+                    row.actualAmount(response.actualAmount);
+                    row.id(response.id)
                 });
         }
     }
 
     function LimitsViewModel(limits, categories) {
+        var self = this;
+        
         self.limitArray = ko.observableArray([]);
         self.categoryArray = ko.observableArray(categories);
 
@@ -72,12 +77,12 @@
             }));
         }
 
-        self.success = function (amount, limit) {
-            return amount <= limit;
+        self.success = function (id, amount, limit) {
+            return id && amount <= limit;
         };
 
-        self.fail = function (amount, limit) {
-            return !self.success(amount, limit);
+        self.fail = function (id, amount, limit) {
+            return id && !self.success(id, amount, limit);
         };
 
         self.removeLimit = function (row) {
@@ -102,8 +107,8 @@
                 })
             })
                 .done(function (response) {
-                    console.log(response);
-                    row.actualAmount(response);
+                    row.actualAmount(response.actualAmount);
+                    row.id(response.id)
                 });
         }
     }
