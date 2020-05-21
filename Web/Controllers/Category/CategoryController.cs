@@ -108,8 +108,8 @@ namespace Web.Controllers.Category
         public IActionResult DeleteCategory(int id)
         {
             var category = repository.Categories.FirstOrDefault(x => x.Id == id);
-        
-            repository.Remove(category);
+
+            Remove(category);
         
             repository.SaveChanges();
         
@@ -150,6 +150,10 @@ namespace Web.Controllers.Category
             repository.SaveChanges();
         }
         
+        private void Remove(DataAccess.Models.Category category)
+        {
+            repository.Remove(category);
+        }
         
         private IList<DataAccess.Models.Category> FetchUserCategories()
         {
