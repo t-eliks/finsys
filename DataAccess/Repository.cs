@@ -24,6 +24,8 @@ namespace DataAccess
         
         public virtual DbSet<Limit> Limits { get; set; }
         
+        public virtual DbSet<RealEstate> RealEstate { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

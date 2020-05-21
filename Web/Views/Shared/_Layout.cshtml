@@ -22,7 +22,7 @@
             <a class="@ActiveLinkHelper.IsActiveLink("CategoryList", ViewData)" asp-controller="Category" asp-action="OpenCategoriesList">Kategorijų valdymas</a>
             <a href="#">Pensijų Fondas</a>
             <a href="#">Akcijos</a>
-            <a href="#">Nekilnojamasis Turtas</a>
+            <a class="@ActiveLinkHelper.IsActiveLink("RealEstateList", ViewData)" asp-controller="RealEstate" asp-action="OpenRealEstateList">Nekilnojamasis Turtas</a>
             <a href="#">Finansiniai Straipsniai</a>
         </div>
         <main class="main-content" role="main" class="pb-3">
