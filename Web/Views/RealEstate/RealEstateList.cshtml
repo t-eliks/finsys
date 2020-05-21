@@ -17,6 +17,11 @@
     <tr>
         <th>#</th>
         <th>Pavadinimas</th>
+        <th>Adresas</th>
+        <th>Išnuomotas</th>
+        <th>Plotas</th>
+        <th>Kambarių sk.</th>
+        <th>Vertė</th>
         <th></th>
     </tr>
 
@@ -25,8 +30,13 @@
         <tr>
             <td>@(Model.RealEstates.IndexOf(realEstate) + 1)</td>
             <td>@(realEstate.Name)</td>
+            <td>@(realEstate.Address)</td>
+            <td>@(realEstate.IsRented)</td>
+            <td>@(realEstate.SquareSpace)</td>
+            <td>@(realEstate.RoomNumber)</td>
+            <td>@(realEstate.Valuation)</td>
             <td>
-                <a class="btn btn-outline-secondary" asp-controller="RealEstate" asp-action="Edit" asp-route-id="@realEstate.Id">Redaguoti</a>
+                <a class="btn btn-outline-secondary" asp-controller="RealEstate" asp-action="OpenEditForm" asp-route-id="@realEstate.Id">Redaguoti</a>
                 <a class="btn btn-danger" href="@Url.Action("Delete", "RealEstate", new { id = realEstate.Id })" rel="modal:open"><span class="fas fa-trash" /></a>
             </td>
         </tr>

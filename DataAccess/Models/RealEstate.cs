@@ -17,7 +17,7 @@ namespace DataAccess.Models
 
         public float SquareSpace { get; set; }
         
-        public int RoomReNumber { get; set; }
+        public int RoomNumber { get; set; }
 
         public float Valuation { get; set; }
     }

@@ -36,7 +36,12 @@ namespace Web.Controllers.Investments
             return View("RealEstateForm", new RealEstateViewModel()
             {
                 Id = realEstate.Id,
-                Name = realEstate.Name
+                Name = realEstate.Name,
+                Address = realEstate.Address,
+                IsRented = realEstate.IsRented,
+                SquareSpace = realEstate.SquareSpace,
+                RoomNumber = realEstate.RoomNumber,
+                Valuation = realEstate.Valuation,
             });
         }
         
@@ -122,7 +127,12 @@ namespace Web.Controllers.Investments
         {
             var realEstate = new DataAccess.Models.RealEstate
             {
-                Name = viewModel.Name?.Trim()
+                Name = viewModel.Name,
+                Address = viewModel.Address,
+                IsRented = viewModel.IsRented,
+                SquareSpace = viewModel.SquareSpace.Value,
+                RoomNumber = viewModel.RoomNumber.Value,
+                Valuation = viewModel.Valuation.Value,
             };
         
             repository.Add(realEstate);
@@ -132,7 +142,12 @@ namespace Web.Controllers.Investments
 
         private void UpdateRealEstate(DataAccess.Models.RealEstate realEstate, RealEstateViewModel viewModel)
         {
-            realEstate.Name = viewModel.Name?.Trim();
+            realEstate.Name = viewModel.Name;
+            realEstate.Address = viewModel.Address;
+            realEstate.IsRented = viewModel.IsRented;
+            realEstate.SquareSpace = viewModel.SquareSpace.Value;
+            realEstate.RoomNumber = viewModel.RoomNumber.Value;
+            realEstate.Valuation = viewModel.Valuation.Value;
             
             repository.Update(realEstate);
         
@@ -146,6 +161,41 @@ namespace Web.Controllers.Investments
                 return "Pavadinimo laukas turi būti užpildytas.";
             }
         
+            if (string.IsNullOrWhiteSpace(viewModel.Address))
+            {
+                return "Adreso laukas turi būti užpildytas.";
+            }
+            
+            if (!viewModel.SquareSpace.HasValue)
+            {
+                return "Plotas yra privalomas";
+            }
+
+            if (viewModel.SquareSpace <= 0)
+            {
+                return "Plotas turi būti daugiau už 0.";
+            }
+            
+            if (!viewModel.RoomNumber.HasValue)
+            {
+                return "Kambarių skaičius yra privalomas";
+            }
+
+            if (viewModel.RoomNumber <= 0)
+            {
+                return "Kambarių skaičius būti daugiau už 0.";
+            }
+            
+            if (!viewModel.Valuation.HasValue)
+            {
+                return "Vertė yra privaloma";
+            }
+
+            if (viewModel.Valuation <= 0)
+            {
+                return "Vertė turi būti daugiau už 0.";
+            }
+            
             return string.Empty;
         }
         
