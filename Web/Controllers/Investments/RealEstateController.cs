@@ -19,14 +19,14 @@ namespace Web.Controllers.Investments
         [Route("real-estates")]
         public IActionResult OpenRealEstateList()
         {
-            return View("RealEstateList", new RealEstateListViewModel() {RealEstates = SelectUserRealEstate()});
+            return View("RealEstateList", new RealEstateListViewModel() {RealEstates = FetchUserRealEstate()});
         }
         
         [Route("real-estates/edit/{id:int}")]
         [HttpGet]
         public IActionResult OpenEditForm(int id)
         {
-            var realEstate = repository.RealEstate.FirstOrDefault(x => x.Id == id);
+            var realEstate = FetchRealEstate(id);
         
             if (realEstate == null)
             {
@@ -68,9 +68,9 @@ namespace Web.Controllers.Investments
         
             TempData["Success"] = "Sėkmingai atnaujintas NT!";
         
-            UpdateRealEstate(realEstate, viewModel);
+            Update(realEstate, viewModel);
         
-            var realEstates = SelectUserRealEstate();
+            var realEstates = FetchUserRealEstate();
         
             return View("RealEstateList", new RealEstateListViewModel() {RealEstates = realEstates});
         }
@@ -93,11 +93,11 @@ namespace Web.Controllers.Investments
                 return View("RealEstateForm", viewModel);
             }
         
-            InsertRealEstate(viewModel);
+            Store(viewModel);
         
             TempData["Success"] = "NT sėkmingai pridėtas!";
         
-            var realEstates = SelectUserRealEstate();
+            var realEstates = FetchUserRealEstate();
         
             return View("RealEstateList", new RealEstateListViewModel() {RealEstates = realEstates});
         }
@@ -123,7 +123,7 @@ namespace Web.Controllers.Investments
             return Ok(Url.Action("OpenRealEstateList", "RealEstate"));
         }
         
-        private void InsertRealEstate(RealEstateViewModel viewModel)
+        private void Store(RealEstateViewModel viewModel)
         {
             var realEstate = new DataAccess.Models.RealEstate
             {
@@ -140,7 +140,7 @@ namespace Web.Controllers.Investments
             repository.SaveChanges();
         }
 
-        private void UpdateRealEstate(DataAccess.Models.RealEstate realEstate, RealEstateViewModel viewModel)
+        private void Update(DataAccess.Models.RealEstate realEstate, RealEstateViewModel viewModel)
         {
             realEstate.Name = viewModel.Name;
             realEstate.Address = viewModel.Address;
@@ -199,7 +199,7 @@ namespace Web.Controllers.Investments
             return string.Empty;
         }
         
-        private IList<DataAccess.Models.RealEstate> SelectUserRealEstate()
+        private IList<DataAccess.Models.RealEstate> FetchUserRealEstate()
         {
             return repository.RealEstate.ToList();
         }
