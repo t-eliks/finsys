@@ -24,11 +24,6 @@
     </div>
     
     <div class="form-group">
-        <label for="IsRented">Išnuomotas*</label>
-        @Html.CheckBoxFor(x => x.IsRented, new { @placeholder = "Išnuomotas", @class = "form-control" })
-    </div>
-    
-    <div class="form-group">
         <label for="SquareSpace">Plotas*</label>
         @Html.TextBoxFor(x => x.SquareSpace, new { @placeholder = "Plotas", @class = "form-control" })
     </div>
@@ -41,6 +36,11 @@
     <div class="form-group">
         <label for="Valuation">Vertė*</label>
         @Html.TextBoxFor(x => x.Valuation, new { @placeholder = "Vertė", @class = "form-control" })
+    </div>
+    
+    <div class="form-check mb-3">
+        @Html.CheckBoxFor(x => x.IsRented, new { @placeholder = "Išnuomotas", @class = "form-check-input" })
+        <label class="form-check-label" for="IsRented">Išnuomotas</label>
     </div>
     
     <button type="submit" class="btn btn-primary">@(isAdd ? "Pridėti" : "Redaguoti")</button>
