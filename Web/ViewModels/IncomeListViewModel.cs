@@ -5,6 +5,6 @@ namespace Web.ViewModels
 {
     public class IncomeListViewModel
     {
-        public IList<Income> Income { get; set; }
+        public IList<IncomeViewModel> Income { get; set; }
     }
 }

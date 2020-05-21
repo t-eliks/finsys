@@ -17,7 +17,8 @@
             <a href="#">Paskolos</a>
             <a class="@ActiveLinkHelper.IsActiveLink("IncomeList", ViewData)" asp-controller="Income" asp-action="OpenIncomeList">Pajamos</a>
             <a class="@ActiveLinkHelper.IsActiveLink("ExpenseList", ViewData)" asp-controller="Expense" asp-action="OpenExpenseList">Išlaidos</a>
-            <a href="#">Kategorijų valdymas</a>
+            <a class="@ActiveLinkHelper.IsActiveLink("BudgetPlanning", ViewData)" asp-controller="Budget" asp-action="OpenPlanningPage">Biudžeto planavimas</a>
+            <a class="@ActiveLinkHelper.IsActiveLink("CategoryList", ViewData)" asp-controller="Category" asp-action="OpenCategoriesList">Kategorijų valdymas</a>
             <a href="#">Pensijų Fondas</a>
             <a href="#">Akcijos</a>
             <a href="#">Nekilnojamasis Turtas</a>
@@ -41,7 +42,12 @@
     <script src="~/js/site.js" asp-append-version="true"></script>\
     <script src="https://kit.fontawesome.com/2402f23348.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <script type='text/javascript' src='~/lib/knockout/knockout-3.5.1.js'></script>
+    <script type='text/javascript' src='~/lib/knockout/knockout.viewmodel.min.js'></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <script type="text/javascript">
+        'use strict'
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -7,6 +7,7 @@ namespace DataAccess
     {
         public Repository(DbContextOptions<Repository> options) : base(options)
         {
+            this.Database.EnsureCreated();
         }
 
         public virtual DbSet<User> Users { get; set; }
@@ -16,7 +17,13 @@ namespace DataAccess
         public virtual DbSet<Expense> Expenses { get; set; }
 
         public virtual DbSet<Income> Income { get; set; }
+        
+        public virtual DbSet<Category> Categories { get; set; }
 
+        public virtual DbSet<Goal> Goals { get; set; }
+        
+        public virtual DbSet<Limit> Limits { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -24,6 +31,7 @@ namespace DataAccess
             builder.Entity<User>().ToTable("User");
             builder.Entity<FinancialGuru>().ToTable("FinancialGuru");
             builder.Entity<Expense>().ToTable("Expense");
+            builder.Entity<Category>().ToTable("Category");
         }
     }
 }
