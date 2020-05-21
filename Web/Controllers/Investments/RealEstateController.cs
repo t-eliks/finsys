@@ -114,7 +114,7 @@ namespace Web.Controllers.Investments
         {
             var realEstate = repository.RealEstate.FirstOrDefault(x => x.Id == id);
         
-            repository.Remove(realEstate);
+            Remove(realEstate);
         
             repository.SaveChanges();
         
@@ -197,6 +197,11 @@ namespace Web.Controllers.Investments
             }
             
             return string.Empty;
+        }
+        
+        private void Remove(DataAccess.Models.RealEstate realEstate)
+        {
+            repository.Remove(realEstate);
         }
         
         private IList<DataAccess.Models.RealEstate> FetchUserRealEstate()
