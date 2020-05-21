@@ -93,7 +93,7 @@ namespace Web.Controllers.Budget
         private static void WriteIncomeData(IList<Income> incomeList, StreamWriter writer)
         {
             var header = "Kategorija,Šaltinis,Kiekis,Komentaras,Sukūrimo data";
-            writer.WriteLine("Income");
+            writer.WriteLine("Pajamos");
             writer.WriteLine(header);
             foreach (var income in incomeList)
             {
@@ -107,7 +107,7 @@ namespace Web.Controllers.Budget
         private static void WriteExpenseData(IList<Expense> expenses, StreamWriter writer)
         {
             var header = "Kategorija,Paskirtis,Kiekis,Pastaba,Sukūrimo data";
-            writer.WriteLine("Expenses");
+            writer.WriteLine("Išlaidos");
             writer.WriteLine(header);
             foreach (var expense in expenses)
             {
