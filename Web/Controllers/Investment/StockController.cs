@@ -61,7 +61,7 @@ namespace Web.Controllers.Investment
         [HttpGet]
         public IActionResult UpdateSelected(int id)
         {
-            var stock = _repository.Stocks.FirstOrDefault(x => x.Id == id);
+            var stock = GetById(id);
             if (stock == null)
             {
                 return View("StockList", new StockListViewModel{Stocks = GetUserStocks()});
@@ -111,12 +111,7 @@ namespace Web.Controllers.Investment
         [HttpDelete]
         public IActionResult DeleteConfirmed(int id)
         {
-            var stock = _repository.Stocks.FirstOrDefault(x => x.Id == id);
-            if (stock != null)
-            {
-                _repository.Stocks.Remove(stock);
-                _repository.SaveChanges();
-            }
+            Delete(id);
             TempData["Success"] = "Akcija pašalinta";
 
             return Ok(Url.Action("OpenStockList", "Stock"));
@@ -125,6 +120,19 @@ namespace Web.Controllers.Investment
         
         # region Private helpers
 
+        private void Delete(int id)
+        {
+            var stock = _repository.Stocks.FirstOrDefault(x => x.Id == id);
+            if (stock != null)
+            {
+                _repository.Stocks.Remove(stock);
+                _repository.SaveChanges();
+            }
+        }
+        private Stock GetById(int id)
+        {
+            return _repository.Stocks.FirstOrDefault(x => x.Id == id);
+        }
         private void UpdateStock(StockViewModel stock, int id)
         {
             _repository.Stocks.Update(new Stock

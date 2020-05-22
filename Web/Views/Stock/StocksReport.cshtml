@@ -10,9 +10,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script type="text/javascript">
-function drawGraph(charDataArray, charName){
+function drawGraph(charDataArray, name, company){
         var charDataJsonObject = JSON.parse(charDataArray);
-        var charData = [["Data", charName]];
+        var charData = [["Data", name]];
         for(i = 0;i < charDataJsonObject.length;i++){
             charData.push([charDataJsonObject[i]['item1'].substring(0,10), charDataJsonObject[i]['item2']]);            
         }
@@ -25,7 +25,7 @@ function drawGraph(charDataArray, charName){
                 legend: { position: 'bottom' }
             };
         
-            var chart = new google.visualization.LineChart(document.getElementById(charName));
+            var chart = new google.visualization.LineChart(document.getElementById(name+company));
         
             chart.draw(data, options);
         
@@ -46,7 +46,7 @@ function drawGraph(charDataArray, charName){
     <div id="@stockData.Name@stockData.Company" style="width: 900px; height: 500px"></div>
     <hr>
     <script>drawGraph('@Json.Serialize(stockData.GetCharData())',
-     '@stockData.Name'+'@stockData.Company')</script>
+     '@stockData.Name','@stockData.Company')</script>
 }
 
 
