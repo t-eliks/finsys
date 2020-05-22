@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -52,7 +51,7 @@ namespace Web.Controllers.Investment
             return PartialView("DeleteConfirmForm", new DeleteViewModel
             {
                 Id = id,
-                Controller = "Investment",
+                Controller = "Stock",
                 Message = "akciją",
                 Method = "DeleteConfirmed"
             });
@@ -81,39 +80,25 @@ namespace Web.Controllers.Investment
         [HttpPost]
         public IActionResult CreateNewStock(StockViewModel stockViewModel)
         {
-            if (!ModelState.IsValid)
+            if (ValidateData())
             {
-                return View("StockForm", stockViewModel);
-            }
-            string errorMessage = ValidateData(stockViewModel);
-            if (!string.IsNullOrEmpty(errorMessage))
-            {
-                TempData["Error"] = errorMessage;
+                TempData["Error"] = "Neteisingai įvesti duomenys";
                 return View("StockForm", stockViewModel);
             }
             InsertStock(stockViewModel);
             TempData["Success"] = "Akcija sėkmingai pridėta! Atsipalaiduokite.";
-            return View("StockList", new StockListViewModel
-            {
-                Stocks = GetUserStocks()
-                
-            });
+            
+            return View("StockList", new StockListViewModel{Stocks = GetUserStocks()});
         }
 
         [HttpPost]
         public IActionResult UpdateStock(StockViewModel stock)
         {
-            if (!ModelState.IsValid)
+            if (ValidateData())
             {
+                TempData["Error"] = "Neteisingai įvesti duomenys";
                 return View("StockForm", stock);
             }
-            var error = ValidateData(stock);
-            if (!string.IsNullOrEmpty(error))
-            {
-                TempData["Error"] = error;
-                return View("StockForm", stock);
-            }
-
             TempData["Success"] = "Akcija sėkmingai atnaujinta";
             UpdateStock(stock, stock.Id);
             
@@ -147,7 +132,7 @@ namespace Web.Controllers.Investment
                 Id = id,
                 Name = stock.Name,
                 Company = stock.Company,
-                Amount = stock.Amount
+                Amount = stock.Amount.Value
             });
             _repository.SaveChanges();
         }
@@ -157,39 +142,37 @@ namespace Web.Controllers.Investment
             {
                 Name = stock.Name,
                 Company = stock.Company,
-                Amount = stock.Amount
+                Amount = stock.Amount.Value
             });
             _repository.SaveChanges();
         }
-        private string ValidateData(StockViewModel stockViewModel)
+        private bool ValidateData()
         {
-            if (_repository.Stocks.FirstOrDefault(x=>
-                x.Company == stockViewModel.Company &&
-                x.Name == stockViewModel.Name &&
-                x.Id != stockViewModel.Id) != null)
-            {
-                return "Akcija tokiu įmonės pavadinimu ir vardu pas jus jau registruota";
-            }
-            return String.Empty;
+            return !ModelState.IsValid;
         }
         private IList<Stock> GetUserStocks()
         {
             return _repository.Stocks.ToList();
         }
-
-        private async Task<IList<StockReportViewModel>> GetStockValuesAndPrognosis(IList<Stock> stocks)
+        /*
+         * Very bad code
+         * I surrender in living
+         */
+        private async Task<StockReportViewModel> GetStockValuesAndPrognosis(IList<Stock> stocks)
         {
-            var stocksList = new List<StockReportViewModel>();
+            var stocksList = new List<StockData>();
             DateTime startDate = DateTime.Now.AddMonths(-6);
             foreach (var stock in stocks)
             {
                 string requestURL = $"https://api.twelvedata.com/time_series?symbol={stock.Name}&interval=1week{_APIServerKey}&start_date={startDate.Date.ToShortDateString()}";
                 var  response = await _cliet.GetStreamAsync(requestURL);
 
-                var stockReportData = await JsonSerializer.DeserializeAsync<StockReportViewModel>(response);
+                var stockReportData = await JsonSerializer.DeserializeAsync<StockData>(response);
                 if (stockReportData.values != null)
                 {
-                    stockReportData.stockData = stock;
+                    stockReportData.Name = stock.Name;
+                    stockReportData.Company = stock.Company;
+                    
                     stocksList.Add(stockReportData);
                 }
                 else
@@ -204,11 +187,11 @@ namespace Web.Controllers.Investment
                     }
                 }
             }
-            if (!string.IsNullOrEmpty(TempData["Error"].ToString()))
+            if (TempData["Error"] != null)
             {
                 TempData["Error"] += " duomenų";
             }
-            return stocksList;
+            return new StockReportViewModel{stocksData = stocksList};
         }
         # endregion
     }
