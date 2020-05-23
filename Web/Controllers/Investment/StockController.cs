@@ -13,16 +13,16 @@ namespace Web.Controllers.Investment
 {
     public class StockController : Controller
     {
-        private readonly Repository _repository;
+        private readonly Repository repository;
 
-        private readonly string _APIServerKey = "&apikey=b5244e77cd9c4eb39b448d73c687bee4";
+        private readonly string apiServerKey = "&apikey=b5244e77cd9c4eb39b448d73c687bee4";
         
-        private static HttpClient _cliet = new HttpClient();
+        private static HttpClient cliet = new HttpClient();
         
         # region Constructor
         public StockController(Repository repository)
         {
-            this._repository = repository;
+            this.repository = repository;
         }
         # endregion
         
@@ -33,6 +33,7 @@ namespace Web.Controllers.Investment
         {
             var userStocks = GetUserStocks();
             var stocks = GetStockValuesAndPrognosis(userStocks).Result;
+            
             return View("StocksReport", stocks);
         }
         [HttpGet]
@@ -66,6 +67,7 @@ namespace Web.Controllers.Investment
             {
                 return View("StockList", new StockListViewModel{Stocks = GetUserStocks()});
             }
+            
             return View("StockForm", new StockViewModel
             {
                 Id = stock.Id,
@@ -78,15 +80,20 @@ namespace Web.Controllers.Investment
         
         # region Post methods
         [HttpPost]
-        public IActionResult CreateNewStock(StockViewModel stockViewModel)
+        public IActionResult CreateNewStock(StockViewModel stock)
         {
-            if (ValidateData())
+            
+            var error = ValidateData(stock); 
+            
+            if (!string.IsNullOrWhiteSpace(error))
             {
-                TempData["Error"] = "Neteisingai įvesti duomenys";
-                return View("StockForm", stockViewModel);
+                TempData["Error"] = error;
+                
+                return View("StockForm", stock);
             }
-            InsertStock(stockViewModel);
-            TempData["Success"] = "Akcija sėkmingai pridėta! Atsipalaiduokite.";
+            InsertStock(stock);
+            
+            TempData["Success"] = "Akcija sėkmingai pridėta!";
             
             return View("StockList", new StockListViewModel{Stocks = GetUserStocks()});
         }
@@ -94,13 +101,18 @@ namespace Web.Controllers.Investment
         [HttpPost]
         public IActionResult UpdateStock(StockViewModel stock)
         {
-            if (ValidateData())
+            var error = ValidateData(stock); 
+            
+            if (!string.IsNullOrWhiteSpace(error))
             {
-                TempData["Error"] = "Neteisingai įvesti duomenys";
+                TempData["Error"] = error;
+                
                 return View("StockForm", stock);
             }
+            
             TempData["Success"] = "Akcija sėkmingai atnaujinta";
-            UpdateStock(stock, stock.Id);
+            
+            UpdateSelectedStock(stock);
             
             return View("StockList", new StockListViewModel{Stocks = GetUserStocks()});
         }
@@ -112,6 +124,7 @@ namespace Web.Controllers.Investment
         public IActionResult DeleteConfirmed(int id)
         {
             Delete(id);
+            
             TempData["Success"] = "Akcija pašalinta";
 
             return Ok(Url.Action("OpenStockList", "Stock"));
@@ -122,45 +135,68 @@ namespace Web.Controllers.Investment
 
         private void Delete(int id)
         {
-            var stock = _repository.Stocks.FirstOrDefault(x => x.Id == id);
+            var stock = repository.Stocks.FirstOrDefault(x => x.Id == id);
+            
             if (stock != null)
             {
-                _repository.Stocks.Remove(stock);
-                _repository.SaveChanges();
+                repository.Stocks.Remove(stock);
+                repository.SaveChanges();
             }
         }
         private Stock GetById(int id)
         {
-            return _repository.Stocks.FirstOrDefault(x => x.Id == id);
+            return repository.Stocks.FirstOrDefault(x => x.Id == id);
         }
-        private void UpdateStock(StockViewModel stock, int id)
+        private void UpdateSelectedStock(StockViewModel stock)
         {
-            _repository.Stocks.Update(new Stock
+            repository.Stocks.Update(new Stock
             {
-                Id = id,
+                Id = stock.Id,
                 Name = stock.Name,
                 Company = stock.Company,
                 Amount = stock.Amount.Value
             });
-            _repository.SaveChanges();
+            
+            repository.SaveChanges();
         }
         private void InsertStock(StockViewModel stock)
         {
-            _repository.Stocks.Add(new Stock
+            repository.Stocks.Add(new Stock
             {
                 Name = stock.Name,
                 Company = stock.Company,
                 Amount = stock.Amount.Value
             });
-            _repository.SaveChanges();
+            
+            repository.SaveChanges();
         }
-        private bool ValidateData()
+        private string ValidateData(StockViewModel stock)
         {
-            return !ModelState.IsValid;
+            if (string.IsNullOrWhiteSpace(stock.Name))
+            {
+                return "Akcijos pavadinimas yra privalomas";
+            }
+            
+            if (string.IsNullOrWhiteSpace(stock.Company))
+            {
+                return "Kompanijos pavadinimas yra privalomas";
+            }
+
+            if (!stock.Amount.HasValue)
+            {
+                return "Akvijų kiekis yra privalomas";
+            }
+
+            if (stock.Amount <= 0)
+            {
+                return "Akcijų kiekis daugiau už nulį";
+            }
+
+            return string.Empty;
         }
         private IList<Stock> GetUserStocks()
         {
-            return _repository.Stocks.ToList();
+            return repository.Stocks.ToList();
         }
         /*
          * Very bad code
@@ -170,12 +206,15 @@ namespace Web.Controllers.Investment
         {
             var stocksList = new List<StockData>();
             DateTime startDate = DateTime.Now.AddMonths(-6);
+            
             foreach (var stock in stocks)
             {
-                string requestURL = $"https://api.twelvedata.com/time_series?symbol={stock.Name}&interval=1week{_APIServerKey}&start_date={startDate.Date.ToShortDateString()}";
-                var  response = await _cliet.GetStreamAsync(requestURL);
+                string requestURL = $"https://api.twelvedata.com/time_series?symbol={stock.Name}&interval=1week{apiServerKey}&start_date={startDate.Date.ToShortDateString()}";
+                
+                var  response = await cliet.GetStreamAsync(requestURL);
 
                 var stockReportData = await JsonSerializer.DeserializeAsync<StockData>(response);
+                
                 if (stockReportData.values != null)
                 {
                     stockReportData.Name = stock.Name;
@@ -195,10 +234,12 @@ namespace Web.Controllers.Investment
                     }
                 }
             }
+            
             if (TempData["Error"] != null)
             {
                 TempData["Error"] += " duomenų";
             }
+            
             return new StockReportViewModel{stocksData = stocksList};
         }
         # endregion
