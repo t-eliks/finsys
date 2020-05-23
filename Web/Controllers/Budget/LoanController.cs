@@ -161,6 +161,21 @@ namespace Web.Controllers.Budget
             return Ok(Url.Action("Index", "Loan"));
         }
 
+        [HttpGet]
+        public IActionResult OpenLoanPlanner()
+        {
+            return View("LoanPlan", new LoanPlanViewModel
+            {
+                Loans = repository.Loans.ToList()
+            });
+        }
+
+        [HttpPost]
+        public IActionResult SubmitLoanQuery()
+        {
+            return NotFound();
+        }
+
         private string ValidateData(LoanViewModel viewModel)
         {
             if (viewModel.Sum < 0)
