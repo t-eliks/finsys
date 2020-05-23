@@ -49,11 +49,11 @@ namespace Web.Controllers.Investment
         [HttpGet]
         public IActionResult DeleteSelected(int id)
         {
-            return PartialView("DeleteConfirmForm", new DeleteViewModel
+            return PartialView("DeleteConfirmForm", new DeletionViewModel()
             {
                 Id = id,
                 Controller = "Stock",
-                Message = "akciją",
+                LtName = "akciją",
                 Method = "DeleteConfirmed"
             });
         }

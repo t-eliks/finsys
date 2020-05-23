@@ -14,19 +14,19 @@
 {
     @Html.HiddenFor(x => x.Id)
     <div class="form-group">
-        <label asp-for="Name"></label>
-        @Html.TextBoxFor(x => x.Name, new {@class = "form-control" })
-        <span asp-validation-for="Name" class="text-danger"></span>
+        <label for="Name">Pavadinimas</label>
+        @Html.TextBoxFor(x => x.Name, new {@placeholder="Pavadinimas pvz. FB" ,@class = "form-control" })
+        
     </div>
     <div class="form-group">
-        <label asp-for="Company"></label>
-        @Html.TextBoxFor(x => x.Company, new {@class = "form-control" })
-        <span asp-validation-for="Company" class="text-danger"></span>
+        <label for="Company">Kompanija</label>
+        @Html.TextBoxFor(x => x.Company, new {@placeholder="Kompanija pvz. UAB Autistas" ,@class = "form-control" })
+        
     </div>
     <div class="form-group">
-        <label asp-for="Amount"></label>
-        @Html.TextBoxFor(x => x.Amount, new {@class = "form-control" })
-        <span asp-validation-for="Amount" class="text-danger"></span>
+        <label for="Amount">Kiekis</label>
+        @Html.TextBoxFor(x => x.Amount, new {@placeholder="Kiekis" ,@class = "form-control" })
+       
     </div>
     <button type="submit" class="btn btn-primary">@(isAdd ? "Pridėti" : "Redaguoti")</button>
     <a class="btn btn-outline-secondary" asp-controller="Stock" asp-action="OpenStockList">Grįžti į sąrašą</a>

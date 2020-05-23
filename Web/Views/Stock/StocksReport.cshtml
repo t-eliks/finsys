@@ -8,10 +8,10 @@
         .Append(SiteCrumbs.Home(Url))
         .Append(SiteCrumbs.StockReport(Url));
     Layout = "~/Views/Shared/_Layout.cshtml";
+     <script type="text/javascript" src="~/js/stockReport.js"></script>
 }
 <h1>Akcijų ataskaita</h1>
 
-    
 @foreach (var stockData in Model.stocksData)
 {
     stockData.Company = stockData.Company.Replace("\"", "");
@@ -22,40 +22,8 @@
     
     <div id="@stockData.Name@stockData.Company" style="width: 900px; height: 500px"></div>
     <hr>
-    <script>drawGraph('@Json.Serialize(stockData.GetCharData())',
-     '@stockData.Name','@stockData.Company')</script>
+     <script>drawGraph('@Json.Serialize(stockData.GetCharData())',
+      '@stockData.Name','@stockData.Company')</script>
 }
-@section Scripts
-{
-<script type="text/javascript">
-
-function drawGraph(charDataArray, name, company){
     
-        var charDataJsonObject = JSON.parse(charDataArray);
-        var charData = [["Data", name]];
-        
-        for(i = 0;i < charDataJsonObject.length;i++){
-            charData.push([charDataJsonObject[i]['item1'].substring(0,10), charDataJsonObject[i]['item2']]);            
-        }
-        
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
-        
-        function drawChart() {
-            
-            var data = google.visualization.arrayToDataTable(charData);
-        
-            var options = {
-                legend: { position: 'bottom' }
-            };
-        
-            var chart = new google.visualization.LineChart(document.getElementById(name+company));
-        
-            chart.draw(data, options);
-        
-    }
-}
-</script>
-}
-
 
