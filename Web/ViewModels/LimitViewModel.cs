@@ -6,7 +6,7 @@
         
         public double Limit { get; set; }
         
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         
         public double ActualAmount { get; set; }
     }
