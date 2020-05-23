@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace Web.ViewModels
 {
-    public class ExpenseListViewModel
+    public class RealEstateListViewModel
     {
-        public IList<ExpenseViewModel> Expenses { get; set; }
+        public IList<RealEstate> RealEstates { get; set; }
     }
 }

@@ -16,6 +16,7 @@
 <table class="table borderless">
     <tr>
         <th>#</th>
+        <th>Kategorija</th>
         <th>Paskirtis</th>
         <th>Kiekis</th>
         <th>Pastaba</th>
@@ -27,10 +28,11 @@
     {
         <tr>
             <td>@(Model.Expenses.IndexOf(expense) + 1)</td>
+            <td>@(expense.Category ?? "-")</td>
             <td>@(expense.Origin)</td>
-            <td>@expense.Amount.ToString("F2") €</td>
+            <td>@expense.Amount?.ToString("F2") €</td>
             <td>@(expense.Comment ?? "-")</td>
-            <td>@expense.CreationDate.ToString("yyyy-MM-dd")</td>
+            <td>@expense.CreationDate?.ToString("yyyy-MM-dd")</td>
             <td>
                 <a class="btn btn-outline-secondary" asp-controller="Expense" asp-action="EditSelected" asp-route-id="@expense.Id">Redaguoti</a>
                 <a class="btn btn-danger" href="@Url.Action("Delete", "Expense", new { id = expense.Id })" rel="modal:open"><span class="fas fa-trash" /></a>
