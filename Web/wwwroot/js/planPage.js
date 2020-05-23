@@ -4,6 +4,8 @@
     function GoalsViewModel(goals, categories) {
         var self = this;
 
+        self.isInitialized = ko.observable(false);
+
         self.goalArray = ko.observableArray([]);
         self.categoryArray = ko.observableArray(categories);
 
@@ -40,6 +42,10 @@
         }
 
         self.saveGoal = function (row) {
+            if (!row.goal()) {
+                return;
+            }
+            
             $.ajax({
                 url: window.saveGoalUrl,
                 contentType: 'application/json',
@@ -59,6 +65,8 @@
 
     function LimitsViewModel(limits, categories) {
         var self = this;
+        
+        self.isInitialized = ko.observable(false);
         
         self.limitArray = ko.observableArray([]);
         self.categoryArray = ko.observableArray(categories);
@@ -96,6 +104,10 @@
         }
 
         self.saveLimit = function (row) {
+            if (!row.limit()) {
+                return;
+            }
+            
             $.ajax({
                 url: window.saveLimitUrl,
                 contentType: 'application/json',
@@ -121,6 +133,9 @@
 
         ko.applyBindings(goalsViewModel, $("#js-goals")[0]);
         ko.applyBindings(limitsViewModel, $("#js-limits")[0]);
+        
+        goalsViewModel.isInitialized(true);
+        limitsViewModel.isInitialized(true);
     }
 
     init();

@@ -10,7 +10,7 @@
 }
 <h1>Biudžeto planavimas</h1>
 
-<div id="js-goals">
+<div id="js-goals" style="display: none" data-bind="visible: isInitialized">
     <h3>Pajamų tikslai kategorijoms:</h3>
     <!-- ko foreach: goalArray -->
     <div class="form-inline">
@@ -18,23 +18,23 @@
             <div class="form-group mb-2 margin-between">
                 <select class="form-control"
                         data-bind="options: categoryOptions, 
-                                                optionsValue: function(item) { return item.id }, 
-                                                optionsText: function(item) { return item.name; }, 
-                                                optionsCaption: 'Pasirinkite kategoriją',
-                                                value: categoryId">
+                                                        optionsValue: function(item) { return item && item.id || 0 }, 
+                                                        optionsText: function(item) { return item && item.name || ''; }, 
+                                                        optionsCaption: 'Be kategorijos',
+                                                        value: categoryId">
                 </select>
-                <input data-bind="value: goal" class="form-control"/>
+                <input data-bind="value: goal" type="number" class="form-control"/>
                 <div class="mb-2">
-                    <button class="btn btn-primary" data-bind="click: $parent.saveGoal">Išsaugoti</button>
+                    <button class="btn btn-primary" type="submit" data-bind="click: $parent.saveGoal">Išsaugoti</button>
                     <button class="btn btn-secondary" data-bind="click: $parent.removeGoal">Pašalinti</button>
                 </div>
             </div>
             <div class="row">
                 <span>Pajamos šioje kategorijoje: </span>
-                 <span data-bind="text: actualAmount() + ', €', css: { 'success-color': $parent.success(id(), actualAmount(), goal()),
-                                                             'fail-color': $parent.fail(id(), actualAmount(), goal()) }" style="margin-left: 5px"></span>
-                 <span data-bind="visible: $parent.fail(id(), actualAmount(), goal())" class="fail-color" style="margin-left: 10px">Jūs dar nepasiekėte savo pajamų tikslo šioje kategorijoje!</span>
-                 <span data-bind="visible: $parent.success(id(), actualAmount(), goal())" class="success-color" style="margin-left: 10px">Jūs pasiekėte savo pajamų tikslo šioje kategorijoje!</span>
+                <span data-bind="text: actualAmount() + ', €', css: { 'success-color': $parent.success(id(), actualAmount(), goal()),
+                                                                     'fail-color': $parent.fail(id(), actualAmount(), goal()) }" style="margin-left: 5px"></span>
+                <span data-bind="visible: $parent.fail(id(), actualAmount(), goal())" class="fail-color" style="margin-left: 10px">Jūs dar nepasiekėte savo pajamų tikslo šioje kategorijoje!</span>
+                <span data-bind="visible: $parent.success(id(), actualAmount(), goal())" class="success-color" style="margin-left: 10px">Jūs pasiekėte savo pajamų tikslo šioje kategorijoje!</span>
             </div>
             <hr/>
         </div>
@@ -48,7 +48,7 @@
     <hr/>
 </div>
 
-<div id="js-limits">
+<div id="js-limits" style="display: none" data-bind="visible: isInitialized">
     <h3>Limitai kategorijoms:</h3>
     <!-- ko foreach: limitArray -->
     <div class="form-inline">
@@ -56,9 +56,9 @@
             <div class="form-group mb-2 margin-between">
                 <select class="form-control"
                         data-bind="options: categoryOptions, 
-                                                optionsValue: function(item) { return item.id }, 
-                                                optionsText: function(item) { return item.name; }, 
-                                                optionsCaption: 'Pasirinkite kategoriją',
+                                                optionsValue: function(item) { return item && item.id || 0 }, 
+                                                optionsText: function(item) { return item && item.name || ''; }, 
+                                                optionsCaption: 'Be kategorijos',
                                                 value: categoryId">
                 </select>
                 <input data-bind="value: limit" class="form-control"/>

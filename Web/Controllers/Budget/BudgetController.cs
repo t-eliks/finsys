@@ -20,7 +20,11 @@ namespace Web.Controllers.Budget
         [Route("budget")]
         public ActionResult OpenPlanningPage()
         {
-            return View("PlanPage", CalculateBudget());
+            var categories = FetchCategories();
+            var limits = FetchLimits();
+            var goals = FetchGoals();
+            
+            return View("PlanPage", CalculateBudget(categories, goals, limits));
         }
         
         [HttpPost]
@@ -144,25 +148,21 @@ namespace Web.Controllers.Budget
             }).ToList();
         }
 
-        public PlanBudgetViewModel CalculateBudget()
+        public PlanBudgetViewModel CalculateBudget(List<DataAccess.Models.Category> categories, List<GoalViewModel> goals, List<LimitViewModel> limits)
         {
-            var categories = FetchCategories();
-            var goals = FetchGoals();
-            var limits = FetchLimits();
-
             var processedGoals = new List<GoalViewModel>();
             var processedLimits = new List<LimitViewModel>();
-            
-            categories.ForEach(c =>
+
+            categories.Union(new List<DataAccess.Models.Category> { null }).ToList().ForEach(c =>
             {
-                processedGoals.AddRange(goals.Where(x => x.CategoryId == c.Id).Select(g =>
+                processedGoals.AddRange(goals.Where(x => x.CategoryId == c?.Id).Select(g =>
                 {
                     g.ActualAmount = repository.Income.Where(x => x.Category == c).Sum(x => x.Amount);
 
                     return g;
                 }).ToList());
 
-                processedLimits.AddRange(limits.Where(x => x.CategoryId == c.Id).Select(l =>
+                processedLimits.AddRange(limits.Where(x => x.CategoryId == c?.Id).Select(l =>
                 {
                     l.ActualAmount = repository.Expenses.Where(x => x.Category == c).Sum(x => x.Amount);
 
