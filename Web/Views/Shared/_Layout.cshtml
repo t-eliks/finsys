@@ -7,6 +7,7 @@
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
     <div class="body-container container">
@@ -21,7 +22,8 @@
             <a class="@ActiveLinkHelper.IsActiveLink("BudgetPlanning", ViewData)" asp-controller="Budget" asp-action="OpenPlanningPage">Biudžeto planavimas</a>
             <a class="@ActiveLinkHelper.IsActiveLink("CategoriesList", ViewData)" asp-controller="Category" asp-action="OpenCategoriesList">Kategorijų valdymas</a>
             <a href="#">Pensijų Fondas</a>
-            <a href="#">Akcijos</a>
+            <a class="@ActiveLinkHelper.IsActiveLink("StockList", ViewData)" asp-controller="Stock" asp-action="OpenStockList">Akcijos</a>
+            <a class="@ActiveLinkHelper.IsActiveLink("StockReport", ViewData)" asp-controller="Stock" asp-action="OpenStocksReport">Akcijų ataskaita</a>
             <a class="@ActiveLinkHelper.IsActiveLink("RealEstateList", ViewData)" asp-controller="RealEstate" asp-action="OpenRealEstateList">Nekilnojamasis Turtas</a>
             <a href="#">Finansiniai Straipsniai</a>
         </div>

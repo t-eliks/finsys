@@ -1,0 +1,29 @@
+﻿@using Web.Helpers
+@model Web.ViewModels.StockReportViewModel
+
+@{
+    ViewData["Title"] = "Akcijų ataskaita";
+    ViewData["Menu"] = "StockReport";
+    ViewData["BreadCrumbs"] = new BreadCrumb()
+        .Append(SiteCrumbs.Home(Url))
+        .Append(SiteCrumbs.StockReport(Url));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+     <script type="text/javascript" src="~/js/stockReport.js"></script>
+}
+<h1>Akcijų ataskaita</h1>
+
+@foreach (var stockData in Model.stocksData)
+{
+    stockData.Company = stockData.Company.Replace("\"", "");
+    
+    <div class="form-group">
+        <p style="font-size: 20px">@stockData.Company @stockData.Name</p>
+    </div>
+    
+    <div id="@stockData.Name@stockData.Company" style="width: 900px; height: 500px"></div>
+    <hr>
+     <script>drawGraph('@Json.Serialize(stockData.GetCharData())',
+      '@stockData.Name','@stockData.Company')</script>
+}
+    
+
