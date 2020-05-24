@@ -19,18 +19,18 @@ namespace Web.Controllers.Category
         [Route("categories")]
         public IActionResult OpenCategoriesList()
         {
-            return View("CategoryList", new CategoryListViewModel() {Categories = FetchUserCategories()});
+            return View("CategoriesList", new CategoryListViewModel() {Categories = FetchUserCategories()});
         }
 
         [Route("category/edit/{id:int}")]
         [HttpGet]
         public IActionResult OpenEditForm(int id)
         {
-            var category = repository.Categories.FirstOrDefault(x => x.Id == id);
+            var category = FetchCategory(id);
         
             if (category == null)
             {
-                return View("CategoryList");
+                return View("CategoriesList");
             }
         
             return View("CategoryForm", new CategoryViewModel()
@@ -52,9 +52,9 @@ namespace Web.Controllers.Category
                 return View("CategoryForm", viewModel);
             }
         
-            var expense = FetchCategory(viewModel.Id);
+            var category = FetchCategory(viewModel.Id);
         
-            if (expense == null)
+            if (category == null)
             {
                 TempData["Error"] = "Something went wrong.";
         
@@ -63,11 +63,11 @@ namespace Web.Controllers.Category
         
             TempData["Success"] = "Sėkmingai atnaujinta kategorija!";
         
-            UpdateCategory(expense, viewModel);
+            UpdateCategory(category, viewModel);
         
             var categories = FetchUserCategories();
         
-            return View("CategoryList", new CategoryListViewModel() {Categories = categories});
+            return View("CategoriesList", new CategoryListViewModel() {Categories = categories});
         }
         
         [HttpGet]
@@ -94,7 +94,7 @@ namespace Web.Controllers.Category
         
             var expenses = FetchUserCategories();
         
-            return View("CategoryList", new CategoryListViewModel() {Categories = expenses});
+            return View("CategoriesList", new CategoryListViewModel() {Categories = expenses});
         }
         
         [HttpGet]
