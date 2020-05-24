@@ -34,6 +34,26 @@ namespace DataAccess
             builder.Entity<FinancialGuru>().ToTable("FinancialGuru");
             builder.Entity<Expense>().ToTable("Expense");
             builder.Entity<Category>().ToTable("Category");
+
+            builder.Entity<Category>()
+                .HasMany(x => x.Limits)
+                .WithOne(x => x.Category)
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            builder.Entity<Category>()
+                .HasMany(x => x.Goals)
+                .WithOne(x => x.Category)
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            builder.Entity<Category>()
+                .HasMany(x => x.Expenses)
+                .WithOne(x => x.Category)
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            builder.Entity<Category>()
+                .HasMany(x => x.Incomes)
+                .WithOne(x => x.Category)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
