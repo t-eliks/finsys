@@ -110,14 +110,14 @@ namespace Web.Controllers.Budget
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public IActionResult DeleteIncome(int id)
         {
             return PartialView("DeleteConfirmForm",
-                new DeletionViewModel() {Id = id, LtName = "pajamas", Method = "DeleteIncome", Controller = "Income"});
+                new DeletionViewModel() {Id = id, LtName = "pajamas", Method = "ConfirmDelete", Controller = "Income"});
         }
 
         [HttpDelete]
-        public IActionResult DeleteIncome(int id)
+        public IActionResult ConfirmDelete(int id)
         {
             var income = repository.Income.FirstOrDefault(x => x.Id == id);
 

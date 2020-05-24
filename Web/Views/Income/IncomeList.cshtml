@@ -37,7 +37,7 @@
             <td>@income.CreationDate?.ToString("yyyy-MM-dd")</td>
             <td>
                 <a class="btn btn-outline-secondary" asp-controller="Income" asp-action="OpenEditForm" asp-route-id="@income.Id">Redaguoti</a>
-                <a class="btn btn-danger" href="@Url.Action("Delete", "Income", new {id = income.Id})" rel="modal:open">
+                <a class="btn btn-danger" href="@Url.Action("DeleteIncome", "Income", new {id = income.Id})" rel="modal:open">
                     <span class="fas fa-trash"/>
                 </a>
             </td>
