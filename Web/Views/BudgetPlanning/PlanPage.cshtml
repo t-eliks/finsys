@@ -89,10 +89,10 @@
 @section Scripts {
     <script>
         window.formModel = @Html.Raw(Json.Serialize(Model));
-        window.saveGoalUrl = '@Url.Action("SubmitGoal", "Budget")';
-        window.saveLimitUrl = '@Url.Action("SubmitLimit", "Budget")';
-        window.removeGoalUrl = '@Url.Action("RemoveGoal", "Budget")';
-        window.removeLimitUrl = '@Url.Action("RemoveLimit", "Budget")';
+        window.saveGoalUrl = '@Url.Action("SubmitGoal", "BudgetPlanning")';
+        window.saveLimitUrl = '@Url.Action("SubmitLimit", "BudgetPlanning")';
+        window.removeGoalUrl = '@Url.Action("RemoveGoal", "BudgetPlanning")';
+        window.removeLimitUrl = '@Url.Action("RemoveLimit", "BudgetPlanning")';
     </script>
     <script type="text/javascript" src="~/js/planPage.js"></script>
 }
