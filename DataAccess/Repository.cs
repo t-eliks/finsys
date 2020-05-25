@@ -17,9 +17,19 @@ namespace DataAccess
         public virtual DbSet<Expense> Expenses { get; set; }
         
         public virtual DbSet<Loan> Loans { get; set; }
+        
+        public virtual DbSet<Stock> Stocks { get; set; }
 
-        public DbSet<Income> Income { get; set; }
+        public virtual DbSet<Income> Income { get; set; }
+        
+        public virtual DbSet<Category> Categories { get; set; }
 
+        public virtual DbSet<Goal> Goals { get; set; }
+        
+        public virtual DbSet<Limit> Limits { get; set; }
+        
+        public virtual DbSet<RealEstate> RealEstate { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -28,6 +38,8 @@ namespace DataAccess
             builder.Entity<FinancialGuru>().ToTable("FinancialGuru");
             builder.Entity<Expense>().ToTable("Expense");
             builder.Entity<Loan>().ToTable("Loan");
+            builder.Entity<Stock>().ToTable("Stock");
+            builder.Entity<Category>().ToTable("Category");
         }
     }
 }

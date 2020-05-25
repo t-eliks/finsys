@@ -106,3 +106,19 @@ span {
     display: flex;
     flex-flow: row;
 }
+
+.new-goal {
+  margin-top: 15px;
+}
+
+.margin-between > * {
+  margin-left: 10px;
+}
+
+.success-color {
+  color: green;
+}
+
+.fail-color {
+  color: red;
+}

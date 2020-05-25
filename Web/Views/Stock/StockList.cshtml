@@ -1,0 +1,39 @@
+﻿@model Web.ViewModels.StockListViewModel
+@using Web.Helpers
+@{
+    ViewData["Title"] = "Akcijų sąrašas";
+    ViewData["Menu"] = "StockList";
+    ViewData["BreadCrumbs"] = new BreadCrumb()
+        .Append(SiteCrumbs.Home(Url))
+        .Append(SiteCrumbs.StockList(Url));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Akcijos</h1>
+
+<div class="align-right margin-min">
+    <a class="btn btn-primary" asp-action="CreateStock" asp-controller="Stock"><span class="fas fa-plus" /> <span>Kurti</span></a>
+</div>
+<table class="table borderless">
+    <tr>
+        <th>#</th>
+        <th>Pavadinimas</th>
+        <th>Kompanija</th>
+        <th>Kiekis</th>
+        <th></th>
+    </tr>
+
+    @foreach (var stock in Model.Stocks)
+    {
+        <tr>
+            <td>@(Model.Stocks.IndexOf(stock) + 1)</td>
+            <td>@(stock.Name)</td>
+            <td>@stock.Company</td>
+            <td>@(stock.Amount)</td>
+            <td>
+                <a class="btn btn-outline-secondary" asp-controller="Stock" asp-action="UpdateSelected" asp-route-id="@stock.Id">Redaguoti</a>
+                <a class="btn btn-danger" href="@Url.Action("DeleteSelected", "Stock", new { id = stock.Id })" rel="modal:open"><span class="fas fa-trash" /></a>
+            </td>
+        </tr>
+    }
+
+</table>

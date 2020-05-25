@@ -1,0 +1,31 @@
+﻿@model Web.ViewModels.DataExportViewModel
+@using Web.Helpers
+@{
+    ViewData["Title"] = "Duomenų eksportavimas";
+    ViewData["Menu"] = "ExportPage";
+    ViewData["BreadCrumbs"] = new BreadCrumb()
+        .Append(SiteCrumbs.Home(Url))
+        .Append(SiteCrumbs.ExportPage(Url));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Duomenų eksportavimas</h1>
+@using (Html.BeginForm("ExportData", "ExternalData", FormMethod.Post))
+{
+    <div class="form-check">
+        @Html.CheckBoxFor(x => x.ShouldIncludeIncome, new {@class = "form-check-input "})
+        <label for="income" class="form-check-label">Ar įtraukti pajamų duomenis?</label>
+    </div>
+    <div class="form-check">
+        @Html.CheckBoxFor(x => x.ShouldIncludeExpenses, new {@class = "form-check-input"})
+        <label for="expenses" class="form-check-label">Ar įtraukti išlaidų duomenis?</label>
+    </div>
+    <div class="form-group">
+        <label for="startingDate" class="form-check-label">Pradžios data</label>
+         <input asp-for="StartingDate" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label for="endingDate" class="form-check-label">Pabaigos data</label>
+        <input asp-for="EndingDate" class="form-control"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Eksportuoti duomenis</button>
+}
