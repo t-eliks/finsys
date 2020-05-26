@@ -25,17 +25,17 @@
     
     <div class="form-group">
         <label for="SquareSpace">Plotas*</label>
-        @Html.TextBoxFor(x => x.SquareSpace, new { @placeholder = "Plotas", @class = "form-control" })
+        @Html.TextBoxFor(x => x.SquareSpace, new {@type = "number",  @placeholder = "Plotas", @class = "form-control" })
     </div>
     
     <div class="form-group">
         <label for="RoomNumber">Kambarių sk.*</label>
-        @Html.TextBoxFor(x => x.RoomNumber, new { @placeholder = "Kambarių sk.", @class = "form-control" })
+        @Html.TextBoxFor(x => x.RoomNumber, new {@type = "number",  @placeholder = "Kambarių sk.", @class = "form-control" })
     </div>
     
     <div class="form-group">
         <label for="Valuation">Vertė*</label>
-        @Html.TextBoxFor(x => x.Valuation, new { @placeholder = "Vertė", @class = "form-control" })
+        @Html.TextBoxFor(x => x.Valuation, new {@type = "number",  @placeholder = "Vertė", @class = "form-control" })
     </div>
     
     <div class="form-check mb-3">

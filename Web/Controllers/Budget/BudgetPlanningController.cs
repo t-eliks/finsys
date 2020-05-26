@@ -7,11 +7,11 @@ using Web.ViewModels;
 
 namespace Web.Controllers.Budget
 {
-    public class BudgetController : Controller
+    public class BudgetPlanningController : Controller
     {
         private readonly Repository repository;
 
-        public BudgetController(Repository repository)
+        public BudgetPlanningController(Repository repository)
         {
             this.repository = repository;
         }
