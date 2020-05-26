@@ -34,17 +34,17 @@ namespace Web.Controllers.Investments
             var userStocks = GetUserStocks();
             var stocks = GetStockValuesAndPrognosis(userStocks).Result;
             
-            return View("StocksReport", stocks);
+            return View("~/Views/Investment/StocksReport.cshtml", stocks);
         }
         [HttpGet]
         public IActionResult OpenStockList()
         {
-            return View("StockList", new StockListViewModel{Stocks = GetUserStocks()});
+            return View("~/Views/Investment/StockList.cshtml", new StockListViewModel{Stocks = GetUserStocks()});
         }
         [HttpGet]
         public IActionResult CreateStock()
         {
-            return View("StockForm", new StockViewModel());
+            return View("~/Views/Investment/StockForm.cshtml", new StockViewModel());
         }
         [HttpGet]
         public IActionResult DeleteSelected(int id)
@@ -65,10 +65,10 @@ namespace Web.Controllers.Investments
             var stock = GetById(id);
             if (stock == null)
             {
-                return View("StockList", new StockListViewModel{Stocks = GetUserStocks()});
+                return View("~/Views/Investment/StockList.cshtml", new StockListViewModel{Stocks = GetUserStocks()});
             }
             
-            return View("StockForm", new StockViewModel
+            return View("~/Views/Investment/StockForm.cshtml", new StockViewModel
             {
                 Id = stock.Id,
                 Name = stock.Name,
@@ -89,13 +89,13 @@ namespace Web.Controllers.Investments
             {
                 TempData["Error"] = error;
                 
-                return View("StockForm", stock);
+                return View("~/Views/Investment/StockForm.cshtml", stock);
             }
             InsertStock(stock);
             
             TempData["Success"] = "Akcija sėkmingai pridėta!";
             
-            return View("StockList", new StockListViewModel{Stocks = GetUserStocks()});
+            return View("~/Views/Investment/StockList.cshtml", new StockListViewModel{Stocks = GetUserStocks()});
         }
 
         [HttpPost]
@@ -107,14 +107,14 @@ namespace Web.Controllers.Investments
             {
                 TempData["Error"] = error;
                 
-                return View("StockForm", stock);
+                return View("~/Views/Investment/StockForm.cshtml", stock);
             }
             
             TempData["Success"] = "Akcija sėkmingai atnaujinta";
             
             UpdateSelectedStock(stock);
             
-            return View("StockList", new StockListViewModel{Stocks = GetUserStocks()});
+            return View("~/Views/Investment/StockList.cshtml", new StockListViewModel{Stocks = GetUserStocks()});
         }
         # endregion 
         

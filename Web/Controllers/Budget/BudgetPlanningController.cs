@@ -24,7 +24,7 @@ namespace Web.Controllers.Budget
             var limits = FetchLimits();
             var goals = FetchGoals();
             
-            return View("PlanPage", CalculateBudget(categories, goals, limits));
+            return View("~/Views/Investment/PlanPage.cshtml", CalculateBudget(categories, goals, limits));
         }
         
         [HttpPost]
