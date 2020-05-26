@@ -23,7 +23,7 @@
                                                         optionsCaption: 'Be kategorijos',
                                                         value: categoryId">
                 </select>
-                <input data-bind="value: goal" type="number" class="form-control"/>
+                <input data-bind="value: goal" type="number" step="0.01" class="form-control"/>
                 <div class="mb-2">
                     <button class="btn btn-primary" type="submit" data-bind="click: $parent.saveGoal">Išsaugoti</button>
                     <button class="btn btn-secondary" data-bind="click: $parent.removeGoal">Pašalinti</button>
@@ -61,7 +61,7 @@
                                                 optionsCaption: 'Be kategorijos',
                                                 value: categoryId">
                 </select>
-                <input data-bind="value: limit" type="number" class="form-control"/>
+                <input data-bind="value: limit" type="number" step="0.01" class="form-control"/>
                 <div class="mb-2">
                     <button class="btn btn-primary" data-bind="click: $parent.saveLimit">Išsaugoti</button>
                     <button class="btn btn-secondary" data-bind="click: $parent.removeLimit">Pašalinti</button>

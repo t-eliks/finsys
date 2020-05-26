@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using DataAccess;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Web.ViewModels;
 
 namespace Web.Controllers.Budget
@@ -120,13 +121,17 @@ namespace Web.Controllers.Budget
 
         private IList<Income> FetchUserIncomeList(DateTime startingDate, DateTime endingDate)
         {
-            return repository.Income.Where(x => x.CreationDate <= endingDate && x.CreationDate >= startingDate)
+            return repository.Income
+                .Include(x => x.Category)
+                .Where(x => x.CreationDate <= endingDate && x.CreationDate >= startingDate)
                 .ToList();
         }
 
         private IList<Expense> SelectUsersExpenses(DateTime startingDate, DateTime endingDate)
         {
-            return repository.Expenses.Where(x => x.CreationDate <= endingDate && x.CreationDate >= startingDate)
+            return repository.Expenses
+                .Include(x => x.Category)
+                .Where(x => x.CreationDate <= endingDate && x.CreationDate >= startingDate)
                 .ToList();
         }
     }

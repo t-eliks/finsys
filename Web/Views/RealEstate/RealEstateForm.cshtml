@@ -35,7 +35,7 @@
     
     <div class="form-group">
         <label for="Valuation">Vertė*</label>
-        @Html.TextBoxFor(x => x.Valuation, new {@type = "number",  @placeholder = "Vertė", @class = "form-control" })
+        @Html.TextBoxFor(x => x.Valuation, new {@type = "number", @step="0.01",  @placeholder = "Vertė", @class = "form-control" })
     </div>
     
     <div class="form-check mb-3">
