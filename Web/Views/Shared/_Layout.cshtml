@@ -13,6 +13,10 @@
     <div class="body-container container">
         <div class="sidebar">
             <a class="@ActiveLinkHelper.IsActiveLink("Home", ViewData)" asp-controller="User" asp-action="Index">Namai</a>
+            <a href="#">Profilis</a>
+            <a href="#">Pranešimai</a>
+            <a class="@ActiveLinkHelper.IsActiveLink("LoanList", ViewData)" asp-controller="Loan" asp-action="Index">Paskolos</a>
+            <a class="@ActiveLinkHelper.IsActiveLink("LoanPlanner", ViewData)" asp-controller="Loan" asp-action="OpenLoanPlanner">Paskolų planuoklė</a>
             <a class="@ActiveLinkHelper.IsActiveLink("ExportPage", ViewData)" asp-controller="ExternalData" asp-action="OpenExportPage">Eksportuoti duomenis</a>
             <a class="@ActiveLinkHelper.IsActiveLink("IncomeList", ViewData)" asp-controller="Income" asp-action="OpenIncomeList">Pajamos</a>
             <a class="@ActiveLinkHelper.IsActiveLink("ExpenseList", ViewData)" asp-controller="Expense" asp-action="OpenExpenseList">Išlaidos</a>

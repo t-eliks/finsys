@@ -16,6 +16,8 @@ namespace DataAccess
 
         public virtual DbSet<Expense> Expenses { get; set; }
         
+        public virtual DbSet<Loan> Loans { get; set; }
+        
         public virtual DbSet<Stock> Stocks { get; set; }
 
         public virtual DbSet<Income> Income { get; set; }
@@ -35,6 +37,7 @@ namespace DataAccess
             builder.Entity<User>().ToTable("User");
             builder.Entity<FinancialGuru>().ToTable("FinancialGuru");
             builder.Entity<Expense>().ToTable("Expense");
+            builder.Entity<Loan>().ToTable("Loan");
             builder.Entity<Stock>().ToTable("Stock");
             builder.Entity<Category>().ToTable("Category");
 

@@ -1,0 +1,36 @@
+﻿@model Web.ViewModels.LoanPlanViewModel
+@using Web.Helpers
+@{
+    ViewData["Title"] = "Paskolų išmokėjimo strategija";
+    ViewData["Menu"] = "LoanPlanner";
+    ViewData["BreadCrumbs"] = new BreadCrumb()
+        .Append(SiteCrumbs.Home(Url))
+        .Append(SiteCrumbs.LoanPlanner(Url));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Paskolų planuoklė</h1>
+
+@using (Html.BeginForm("SubmitPlanData", "Loan", FormMethod.Post))
+{
+    <div class="form-group">
+        <label for="InvestmentSum">Kiek planuojate papildomai investuoti? (kas mėnesį)</label>
+        @Html.TextBoxFor(x => x.InvestmentSum, new {placeholder = "Investuojama suma", @class = "form-control", type = "number", step = "0.01"})
+    </div>
+    <div class="form-group">
+        <label for="InvestmentInterest">Kokios investicijos palūkanos? (metinės)</label>
+        @Html.TextBoxFor(x => x.InvestmentInterest, new {placeholder = "Investicijos palūkanos", @class = "form-control", type = "number", step = "0.01"})
+    </div>
+    <div class="form-group">
+        <label for="SelectedLoanId">Pasirinkite paskolą</label>
+        @Html.DropDownListFor(x => x.SelectedLoanId, new SelectList(ViewBag.Loans, "Value", "Text"), new {@class = "form-control"})
+    </div>
+    <button type="submit" class="btn btn-primary">Pateikti duomenis</button>
+}
+
+<br/>
+
+@if (!string.IsNullOrEmpty(ViewBag.FinalAnswer))
+{
+    <div>@ViewBag.FinalAnswer</div>
+}
