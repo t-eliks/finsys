@@ -13,7 +13,8 @@ namespace Web.Helpers
 
         public static CrumbViewModel LoanList(IUrlHelper urlHelper) => new CrumbViewModel
             {Name = "Paskolos", Link = urlHelper.Action("Index", "Loan")};
-
+        public static CrumbViewModel LoanDetails(IUrlHelper urlHelper, int id) => new CrumbViewModel
+            {Name = $"Paskola (id={id.ToString()})", Link = urlHelper.Action("GetLoan", "Loan")};
         public static CrumbViewModel LoanPlanner(IUrlHelper urlHelper) => new CrumbViewModel
             {Name = "Paskolų planuoklė", Link = urlHelper.Action("OpenLoanPlanner", "Loan")};
 

@@ -15,16 +15,16 @@
 
 <h1>@(title)</h1>
 
-@using (Html.BeginForm(isAdd ? "Create" : "Edit", "Loan", FormMethod.Post))
+@using (Html.BeginForm(isAdd ? "PostCreate" : "PostEdit", "Loan", FormMethod.Post))
 {
     @Html.HiddenFor(x => x.Id)
     <div class="form-group">
         <label for="Sum">Suma (€)*</label>
-        @Html.TextBoxFor(x => x.Sum, new {@placeholder = "Suma", @class = "form-control"})
+        @Html.TextBoxFor(x => x.Sum, new {@placeholder = "Suma", @class = "form-control", type = "number"})
     </div>
     <div class="form-group">
         <label for="Interest">Palūkanos (%)*</label>
-        @Html.TextBoxFor(x => x.Interest, new {@placeholder = "Palūkanos", @class = "form-control"})
+        @Html.TextBoxFor(x => x.Interest, new {@placeholder = "Palūkanos", @class = "form-control", type = "number"})
     </div>
     <div class="form-group">
         <label for="Term">Terminas*</label>
@@ -36,7 +36,7 @@
     </div>
     <div class="form-group">
         <label for="ReturnedSum">Grąžinta suma (€)*</label>
-        @Html.TextBoxFor(x => x.ReturnedSum, new {@placeholder = "Grąžinta suma", @class = "form-control"})
+        @Html.TextBoxFor(x => x.ReturnedSum, new {@placeholder = "Grąžinta suma", @class = "form-control", type = "number"})
     </div>
     <div class="form-group">
         <label for="Type">Tipas</label>
@@ -49,6 +49,6 @@
     }
     else
     {
-        <a class="btn btn-outline-secondary" asp-controller="Loan" asp-action="Loan" asp-route-id="@Model.Id">Grįžti į atgal</a>
+        <a class="btn btn-outline-secondary" asp-controller="Loan" asp-action="GetLoan" asp-route-id="@Model.Id">Grįžti atgal</a>
     }
 }

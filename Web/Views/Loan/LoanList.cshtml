@@ -11,7 +11,7 @@
 <h1>Paskolos</h1>
 
 <div class="align-right margin-min">
-    <a class="btn btn-primary" asp-action="Create" asp-controller="Loan">
+    <a class="btn btn-primary" asp-action="GetCreate" asp-controller="Loan">
         <span class="fas fa-plus"/> <span>Kurti</span>
     </a>
 </div>
@@ -34,7 +34,7 @@
             <td>@loan.Term.ToShortDateString()</td>
             <td>@loan.Provider</td>
             <td>
-                <a class="btn btn-outline-secondary" asp-controller="Loan" asp-action="Loan" asp-route-id="@loan.Id">Detaliau</a>
+                <a class="btn btn-outline-secondary" asp-controller="Loan" asp-action="GetLoan" asp-route-id="@loan.Id">Detaliau</a>
             </td>
         </tr>
     }

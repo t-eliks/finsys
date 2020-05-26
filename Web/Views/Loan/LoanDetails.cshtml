@@ -5,7 +5,8 @@
     ViewData["Menu"] = "LoanList";
     ViewData["BreadCrumbs"] = new BreadCrumb()
         .Append(SiteCrumbs.Home(Url))
-        .Append(SiteCrumbs.LoanList(Url));
+        .Append(SiteCrumbs.LoanList(Url))
+        .Append(SiteCrumbs.LoanDetails(Url, Model.Id));
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h1>Paskola</h1>
@@ -16,12 +17,12 @@
 
 <table class="table borderless">
     <tr>
-        <th>#</th>
+        <th>Id</th>
         <td>@Model.Id</td>
     </tr>
     <tr>
         <th>Suma</th>
-        <td>@Model.Sum.ToString("F") €</td>
+        <td>@Model.Sum.ToString() €</td>
     </tr>
     <tr>
         <th>Palūkanos</th>
@@ -46,6 +47,6 @@
 </table>
 
 <div class="margin-min">
-    <a class="btn btn-primary" asp-controller="Loan" asp-action="Edit" asp-route-id="@Model.Id">Redaguoti</a>
-    <a class="btn btn-danger" href="@Url.Action("Delete", "Loan", new { id = Model.Id })" rel="modal:open"><span class="fas fa-trash" /></a>
+    <a class="btn btn-primary" asp-controller="Loan" asp-action="GetEdit" asp-route-id="@Model.Id">Redaguoti</a>
+    <a class="btn btn-danger" href="@Url.Action("GetDelete", "Loan", new { id = Model.Id })" rel="modal:open"><span class="fas fa-trash" /></a>
 </div>
