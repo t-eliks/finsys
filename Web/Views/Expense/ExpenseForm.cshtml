@@ -26,7 +26,7 @@
     </div>
     <div class="form-group">
         <label for="Amount">Kiekis (€)*</label>
-        @Html.TextBoxFor(x => x.Amount, new { @type="number", @placeholder = "Kiekis", @class = "form-control", data_bind = $"value: viewModel.{nameof(Model.Amount).ToLower()}"})
+        @Html.TextBoxFor(x => x.Amount, new { @type="number", @step="0.01", @placeholder = "Kiekis", @class = "form-control", data_bind = $"value: viewModel.{nameof(Model.Amount).ToLower()}"})
     </div>
     <div class="form-group">
         <label for="Comment">Pastaba</label>
