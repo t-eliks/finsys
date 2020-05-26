@@ -47,16 +47,24 @@ namespace DataAccess
                 .HasMany(x => x.Goals)
                 .WithOne(x => x.Category)
                 .OnDelete(DeleteBehavior.Cascade);
-            
+
             builder.Entity<Category>()
                 .HasMany(x => x.Expenses)
-                .WithOne(x => x.Category)
-                .OnDelete(DeleteBehavior.Cascade);
+                .WithOne(x => x.Category);
             
             builder.Entity<Category>()
                 .HasMany(x => x.Incomes)
-                .WithOne(x => x.Category)
-                .OnDelete(DeleteBehavior.Cascade);
+                .WithOne(x => x.Category);
+            
+            builder.Entity<Income>()
+                .HasOne(x => x.Category)
+                .WithMany(x => x.Incomes)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+
+            builder.Entity<Expense>()
+                .HasOne(x => x.Category)
+                .WithMany(x => x.Expenses)
+                .OnDelete(DeleteBehavior.ClientNoAction);
         }
     }
 }
