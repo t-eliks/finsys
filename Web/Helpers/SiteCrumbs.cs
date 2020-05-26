@@ -11,12 +11,21 @@ namespace Web.Helpers
         public static CrumbViewModel ExpenseList(IUrlHelper urlHelper) => new CrumbViewModel
             {Name = "Išlaidos", Link = urlHelper.Action("OpenExpenseList", "Expense")};
 
+
         public static CrumbViewModel LoanList(IUrlHelper urlHelper) => new CrumbViewModel
             {Name = "Paskolos", Link = urlHelper.Action("Index", "Loan")};
         public static CrumbViewModel LoanDetails(IUrlHelper urlHelper, int id) => new CrumbViewModel
             {Name = $"Paskola (id={id.ToString()})", Link = urlHelper.Action("GetLoan", "Loan")};
         public static CrumbViewModel LoanPlanner(IUrlHelper urlHelper) => new CrumbViewModel
             {Name = "Paskolų planuoklė", Link = urlHelper.Action("OpenLoanPlanner", "Loan")};
+
+        public static CrumbViewModel StockList(IUrlHelper urlHelper) => new CrumbViewModel {Name = "Akcijos", Link = urlHelper.Action("OpenStockList", "Stock")};
+        public static CrumbViewModel StockReport(IUrlHelper urlHelper) => new CrumbViewModel {Name = "Akcijų ataskaita", Link = urlHelper.Action("OpenStocksReport", "Stock")};
+        
+        public static CrumbViewModel IncomeList(IUrlHelper urlHelper) => new CrumbViewModel { Name = "Pajamos", Link = urlHelper.Action("OpenIncomeList", "Income") };
+        
+        public static CrumbViewModel BudgetPlanning(IUrlHelper urlHelper) => new CrumbViewModel { Name = "Biudžeto planavimas", Link = urlHelper.Action("OpenPlanningPage", "BudgetPlanning") };
+
 
         public static CrumbViewModel StockList(IUrlHelper urlHelper) => new CrumbViewModel
             {Name = "Akcijos", Link = urlHelper.Action("OpenStockList", "Stock")};

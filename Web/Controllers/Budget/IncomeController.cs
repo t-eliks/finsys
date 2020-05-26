@@ -59,9 +59,7 @@ namespace Web.Controllers.Budget
 
             if (!string.IsNullOrWhiteSpace(validation))
             {
-                TempData["Error"] = validation;
-
-                return View("IncomeForm", viewModel);
+                return BadRequest(validation);
             }
 
             var income = FetchIncome(viewModel.Id);
@@ -95,9 +93,7 @@ namespace Web.Controllers.Budget
 
             if (!string.IsNullOrWhiteSpace(validation))
             {
-                TempData["Error"] = validation;
-
-                return View("IncomeForm", viewModel);
+                return BadRequest(validation);
             }
 
             InsertNewIncome(viewModel);
