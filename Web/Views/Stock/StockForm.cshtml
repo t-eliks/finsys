@@ -14,17 +14,17 @@
 {
     @Html.HiddenFor(x => x.Id)
     <div class="form-group">
-        <label for="Name">Pavadinimas</label>
-        @Html.TextBoxFor(x => x.Name, new {@placeholder="Pavadinimas pvz. FB" ,@class = "form-control" })
+        <label for="Name">Pavadinimas*</label>
+        @Html.TextBoxFor(x => x.Name, new {@placeholder="Pavadinimas" ,@class = "form-control" })
         
     </div>
     <div class="form-group">
-        <label for="Company">Kompanija</label>
-        @Html.TextBoxFor(x => x.Company, new {@placeholder="Kompanija pvz. UAB Autistas" ,@class = "form-control" })
+        <label for="Company">Įmonė*</label>
+        @Html.TextBoxFor(x => x.Company, new {@placeholder="Įmonės pavadinimas" ,@class = "form-control" })
         
     </div>
     <div class="form-group">
-        <label for="Amount">Kiekis</label>
+        <label for="Amount">Kiekis*</label>
         @Html.TextBoxFor(x => x.Amount, new {@type = "number", @placeholder="Kiekis" ,@class = "form-control" })
        
     </div>

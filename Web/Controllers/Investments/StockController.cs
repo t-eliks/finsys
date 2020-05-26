@@ -9,7 +9,7 @@ using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using Web.ViewModels;
 
-namespace Web.Controllers.Investment
+namespace Web.Controllers.Investments
 {
     public class StockController : Controller
     {
@@ -179,17 +179,17 @@ namespace Web.Controllers.Investment
             
             if (string.IsNullOrWhiteSpace(stock.Company))
             {
-                return "Kompanijos pavadinimas yra privalomas";
+                return "Įmonės pavadinimas yra privalomas";
             }
 
             if (!stock.Amount.HasValue)
             {
-                return "Akvijų kiekis yra privalomas";
+                return "Akcijų kiekis yra privalomas";
             }
 
             if (stock.Amount <= 0)
             {
-                return "Akcijų kiekis daugiau už nulį";
+                return "Akcijų kiekis turi būti daugiau už nulį";
             }
 
             return string.Empty;
@@ -198,10 +198,7 @@ namespace Web.Controllers.Investment
         {
             return repository.Stocks.ToList();
         }
-        /*
-         * Very bad code
-         * I surrender in living
-         */
+
         private async Task<StockReportViewModel> GetStockValuesAndPrognosis(IList<Stock> stocks)
         {
             var stocksList = new List<StockData>();

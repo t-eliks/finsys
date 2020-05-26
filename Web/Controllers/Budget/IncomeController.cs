@@ -4,6 +4,7 @@ using System.Linq;
 using DataAccess;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Web.ViewModels;
 
 namespace Web.Controllers.Budget
@@ -168,10 +169,10 @@ namespace Web.Controllers.Budget
             income.Comment = viewModel.Comment;
             income.Source = viewModel.Source;
             income.UpdateDate = DateTime.UtcNow;
-            income.Category = repository.Categories.FirstOrDefault(x => x.Id == viewModel.Id);
+            income.Category = repository.Categories.FirstOrDefault(x => x.Id == viewModel.CategoryId);
 
             repository.Update(income);
-
+            
             repository.SaveChanges();
         }
 
@@ -193,7 +194,9 @@ namespace Web.Controllers.Budget
 
         private Income FetchIncome(int id)
         {
-            return repository.Income.FirstOrDefault(x => x.Id == id);
+            return repository.Income
+                .Include(x => x.Category)
+                .FirstOrDefault(x => x.Id == id);
         }
         
         private IList<CategoryViewModel> GetAllCategories()
